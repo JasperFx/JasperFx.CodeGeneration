@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <PackageId>JasperFx.CodeGeneration.Commands</PackageId>
+        <Description>Command line utilities for managing Lamar dynamically generated code</Description>
+        <Version>0.9.0</Version>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\JasperFx.CodeGeneration\JasperFx.CodeGeneration.csproj" />
+      <ProjectReference Include="..\JasperFx.RuntimeCompiler\JasperFx.RuntimeCompiler.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Oakton" Version="5.0.0" />
+    </ItemGroup>
+
+
+</Project>

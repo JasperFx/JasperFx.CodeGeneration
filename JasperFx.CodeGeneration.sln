@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BC8AFFEA-00ED-4F26-AE79-7ABFEC74A14E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodegenTests", "src\CodegenTests\CodegenTests.csproj", "{72189937-7F59-4005-804D-897AE8EBCDD7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneratorTarget", "src\GeneratorTarget\GeneratorTarget.csproj", "{057EC4A4-6938-4D03-96AA-0284C79C5E7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JasperFx.CodeGeneration", "src\JasperFx.CodeGeneration\JasperFx.CodeGeneration.csproj", "{B4745032-B605-4C9F-A211-58654263A44D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JasperFx.CodeGeneration.Commands", "src\JasperFx.CodeGeneration.Commands\JasperFx.CodeGeneration.Commands.csproj", "{FEB65554-5279-47A7-BB87-EC3C58FCCFFF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JasperFx.RuntimeCompiler", "src\JasperFx.RuntimeCompiler\JasperFx.RuntimeCompiler.csproj", "{07661BB4-1737-4EDC-AB50-FA52FACCB639}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{72189937-7F59-4005-804D-897AE8EBCDD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72189937-7F59-4005-804D-897AE8EBCDD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72189937-7F59-4005-804D-897AE8EBCDD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72189937-7F59-4005-804D-897AE8EBCDD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{057EC4A4-6938-4D03-96AA-0284C79C5E7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{057EC4A4-6938-4D03-96AA-0284C79C5E7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{057EC4A4-6938-4D03-96AA-0284C79C5E7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{057EC4A4-6938-4D03-96AA-0284C79C5E7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4745032-B605-4C9F-A211-58654263A44D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4745032-B605-4C9F-A211-58654263A44D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4745032-B605-4C9F-A211-58654263A44D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4745032-B605-4C9F-A211-58654263A44D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEB65554-5279-47A7-BB87-EC3C58FCCFFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEB65554-5279-47A7-BB87-EC3C58FCCFFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEB65554-5279-47A7-BB87-EC3C58FCCFFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEB65554-5279-47A7-BB87-EC3C58FCCFFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07661BB4-1737-4EDC-AB50-FA52FACCB639}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07661BB4-1737-4EDC-AB50-FA52FACCB639}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07661BB4-1737-4EDC-AB50-FA52FACCB639}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07661BB4-1737-4EDC-AB50-FA52FACCB639}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{72189937-7F59-4005-804D-897AE8EBCDD7} = {BC8AFFEA-00ED-4F26-AE79-7ABFEC74A14E}
+		{057EC4A4-6938-4D03-96AA-0284C79C5E7B} = {BC8AFFEA-00ED-4F26-AE79-7ABFEC74A14E}
+		{B4745032-B605-4C9F-A211-58654263A44D} = {BC8AFFEA-00ED-4F26-AE79-7ABFEC74A14E}
+		{FEB65554-5279-47A7-BB87-EC3C58FCCFFF} = {BC8AFFEA-00ED-4F26-AE79-7ABFEC74A14E}
+		{07661BB4-1737-4EDC-AB50-FA52FACCB639} = {BC8AFFEA-00ED-4F26-AE79-7ABFEC74A14E}
+	EndGlobalSection
+EndGlobal
