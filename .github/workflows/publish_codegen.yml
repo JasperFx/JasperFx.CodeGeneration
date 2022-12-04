@@ -1,4 +1,4 @@
-name: Publish Lamar Code Generation Nugets
+name: Publish JasperFx code generation & compilation nugets
 
 on:
   workflow_dispatch:
