@@ -16,7 +16,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\JasperFx.RuntimeCompiler\JasperFx.RuntimeCompiler.csproj"/>
-        <ProjectReference Include="..\Lamar\Lamar.csproj"/>
     </ItemGroup>
 
 </Project>
