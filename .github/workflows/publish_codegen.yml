@@ -19,7 +19,7 @@ jobs:
         dotnet-version: 6.0.x
 
     - name: Run Pack
-      run: ./build.sh --no-color pack
+      run: dotnet run -p build/build.csproj -- pack
       shell: bash
 
     - name: Publish to NuGet
