@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using JasperFx.CodeGeneration;
-using JasperFx.StringExtensions;
+using JasperFx.Core;
 
 namespace GeneratorTarget
 {

@@ -3,7 +3,6 @@
     <PropertyGroup>
         <PackageId>JasperFx.CodeGeneration.Commands</PackageId>
         <Description>Command line utilities for managing Lamar dynamically generated code</Description>
-        <Version>0.9.0</Version>
     </PropertyGroup>
 
     <ItemGroup>
@@ -12,7 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Oakton" Version="5.0.0" />
+        <PackageReference Include="Oakton" Version="6.0.0-alpha-1" />
     </ItemGroup>
 
 

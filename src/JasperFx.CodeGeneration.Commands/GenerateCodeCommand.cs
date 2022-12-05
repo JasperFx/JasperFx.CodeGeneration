@@ -1,13 +1,8 @@
 using System;
 using System.Linq;
-using JasperFx.StringExtensions;
 using JasperFx.CodeGeneration.Model;
+using JasperFx.Core;
 using JasperFx.RuntimeCompiler;
-#if NETSTANDARD2_0
-using Microsoft.AspNetCore.Hosting;
-#else
-using Microsoft.Extensions.Hosting;
-#endif
 using Microsoft.Extensions.DependencyInjection;
 using Oakton;
 using Spectre.Console;
