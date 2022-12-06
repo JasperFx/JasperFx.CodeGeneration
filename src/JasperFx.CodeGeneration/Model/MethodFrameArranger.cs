@@ -156,7 +156,7 @@ internal class MethodFrameArranger : IMethodVariables
     {
         // Stupid. Can't believe I haven't fixed this in Baseline
         var list = new List<InjectedField>();
-        dependencies.Variables.Each((key, _) =>
+        dependencies.Variables.Keys().Each((key, _) =>
         {
             if (key is InjectedField field)
             {
@@ -167,12 +167,12 @@ internal class MethodFrameArranger : IMethodVariables
 
     internal void findSetters(DependencyGatherer dependencies)
     {
-        foreach (var VARIABLE in dependencies.Variables.Keys())
+        foreach (var VARIABLE in dependencies.Variables)
         {
             
         }
         
-        dependencies.Variables.Each((key, _) =>
+        dependencies.Variables.Keys().Each((key, _) =>
         {
             if (key is Setter setter)
             {
