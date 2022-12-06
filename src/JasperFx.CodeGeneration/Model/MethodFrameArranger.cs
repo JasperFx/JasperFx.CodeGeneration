@@ -144,7 +144,7 @@ internal class MethodFrameArranger : IMethodVariables
 
         // Step 3, gather any missing frames and
         // add to the beginning of the list
-        dependencies.Dependencies.GetAll().SelectMany(x => x).Distinct()
+        dependencies.Dependencies.SelectMany(x => x).Distinct()
             .Where(x => !frames.Contains(x))
             .Each(x => frames.Insert(0, x));
 
@@ -167,6 +167,11 @@ internal class MethodFrameArranger : IMethodVariables
 
     internal void findSetters(DependencyGatherer dependencies)
     {
+        foreach (var VARIABLE in dependencies.Variables.Keys())
+        {
+            
+        }
+        
         dependencies.Variables.Each((key, _) =>
         {
             if (key is Setter setter)

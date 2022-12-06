@@ -42,11 +42,10 @@ public class DynamicCodeBuilder
 
     public void DeleteAllGeneratedCode()
     {
-        var fileSystem = new FileSystem();
         foreach (var directory in Collections.Select(x => x.Rules.GeneratedCodeOutputPath).Distinct())
         {
-            fileSystem.CleanDirectory(directory);
-            fileSystem.DeleteDirectory(directory);
+            FileSystem.CleanDirectory(directory);
+            FileSystem.DeleteDirectoryIfExists(directory);
 
             Console.WriteLine($"Deleted directory {directory}");
         }
@@ -66,12 +65,11 @@ public class DynamicCodeBuilder
 
     public void WriteGeneratedCode(Action<string> onFileWritten)
     {
-        var fileSystem = new FileSystem();
 
         foreach (var collection in Collections)
         {
             var directory = collection.Rules.GeneratedCodeOutputPath.ToFullPath();
-            fileSystem.CreateDirectory(directory);
+            FileSystem.CreateDirectoryIfNotExists(directory);
 
             var exportDirectory = collection.ToExportDirectory(directory);
 

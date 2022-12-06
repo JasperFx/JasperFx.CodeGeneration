@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
   <PropertyGroup>
-    <VersionPrefix>0.9.5</VersionPrefix>
+    <VersionPrefix>1.0.0</VersionPrefix>
     <LangVersion>10.0</LangVersion>
     <Authors>Jeremy D. Miller;Babu Annamalai;Oskar Dudycz;Joona-Pekka Kokko</Authors>
     <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
     <DebugType>portable</DebugType>
 
-    <PackageIconUrl>https://jasperfx.github.io/jasper.png</PackageIconUrl>
+    <PackageIcon>jasper-icon.png</PackageIcon>
     <PackageProjectUrl>https:/github.com/jasperfx/JasperFx.CodeGeneration</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <NoWarn>1570;1571;1572;1573;1574;1587;1591;1701;1702;1711;1735;0618</NoWarn>
@@ -20,7 +20,8 @@
     <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
-    <PackageReference Include="IsExternalInit" Version="1.0.2" PrivateAssets="All"/>
+
+  <ItemGroup>
+    <None Include="../../jasper-icon.png" Pack="true" PackagePath="jasper-icon" />
   </ItemGroup>
 </Project>

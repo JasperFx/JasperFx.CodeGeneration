@@ -38,7 +38,7 @@ public static class CodeGenerationExtensions
         var parts = generator.ChildNamespace.Split('.');
         foreach (var part in parts) generatorDirectory = Path.Combine(generatorDirectory, part);
 
-        new FileSystem().CreateDirectory(generatorDirectory);
+        FileSystem.CreateDirectoryIfNotExists(generatorDirectory);
 
         return generatorDirectory;
     }
