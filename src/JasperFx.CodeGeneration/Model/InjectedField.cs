@@ -14,6 +14,12 @@ public class InjectedField : Variable
         ArgType = argType;
     }
 
+    public override void OverrideName(string variableName)
+    {
+        base.OverrideName(variableName);
+        CtorArg = $"_{variableName}"; // Gotta do this to disambiguate injected fields!
+    }
+
     public Type ArgType { get; }
 
     public string CtorArg { get; protected set; }
