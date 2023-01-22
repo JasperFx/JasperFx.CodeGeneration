@@ -19,14 +19,14 @@ public interface ISourceWriter
     ///     "END"
     /// </summary>
     /// <param name="text"></param>
-    void Write(string text = null);
+    void Write(string? text = null);
 
     /// <summary>
     ///     Writes a line with a closing '}' character at the current block level
     ///     and decrements the current block level
     /// </summary>
     /// <param name="extra"></param>
-    void FinishBlock(string extra = null);
+    void FinishBlock(string? extra = null);
 
 
     /// <summary>

@@ -38,7 +38,7 @@ public enum ReturnAction
 
 public class MethodCall : Frame
 {
-    public MethodCall(Type handlerType, string methodName) : this(handlerType, handlerType.GetMethod(methodName))
+    public MethodCall(Type handlerType, string methodName) : this(handlerType, handlerType.GetMethod(methodName)!)
     {
     }
 
@@ -51,8 +51,6 @@ public class MethodCall : Frame
         ReturnType = correctedReturnType(method.ReturnType);
         if (ReturnType != null)
         {
-#if !NET461 && !NET48
-
 
             if (ReturnType.IsValueTuple())
             {
@@ -62,7 +60,7 @@ public class MethodCall : Frame
             }
             else
             {
-#endif
+
                 var name = ReturnType.IsSimple() || ReturnType == typeof(object) || ReturnType == typeof(object[])
                     ? "result_of_" + method.Name
                     : Variable.DefaultArgName(ReturnType);
@@ -70,9 +68,8 @@ public class MethodCall : Frame
 
                 ReturnVariable = new Variable(ReturnType, name, this);
 
-#if !NET461 && !NET48
             }
-#endif
+
         }
 
 
@@ -86,7 +83,7 @@ public class MethodCall : Frame
                 var paramType = param.ParameterType.IsByRef
                     ? param.ParameterType.GetElementType()
                     : param.ParameterType;
-                Arguments[i] = new OutArgument(paramType, this);
+                Arguments[i] = new OutArgument(paramType!, this);
             }
         }
     }
@@ -96,15 +93,15 @@ public class MethodCall : Frame
     public Type HandlerType { get; }
     public MethodInfo Method { get; }
 
-    public Variable ReturnVariable { get; private set; }
+    public Variable? ReturnVariable { get; private set; }
 
-    public Type ReturnType { get; }
+    public Type? ReturnType { get; }
 
     /// <summary>
     ///     Optional text to write as a descriptive comment
     ///     in the generated code
     /// </summary>
-    public string CommentText { get; set; }
+    public string? CommentText { get; set; }
 
 
     /// <summary>
@@ -112,7 +109,7 @@ public class MethodCall : Frame
     /// </summary>
     public bool IsLocal { get; set; }
 
-    public Variable Target { get; set; }
+    public Variable? Target { get; set; }
 
     public Variable[] Arguments { get; }
 
@@ -133,10 +130,10 @@ public class MethodCall : Frame
     {
         var method = ReflectionHelper.GetMethod(expression);
 
-        return new MethodCall(typeof(T), method);
+        return new MethodCall(typeof(T), method!);
     }
 
-    private Type correctedReturnType(Type type)
+    private Type? correctedReturnType(Type type)
     {
         if (type == typeof(Task) || type == typeof(ValueTask) || type == typeof(void))
         {
@@ -169,7 +166,7 @@ public class MethodCall : Frame
             return new CastVariable(inner, type);
         }
 
-        return chain.TryFindVariableByName(type, param.Name, out var variable) ? variable : chain.FindVariable(type);
+        return chain.TryFindVariableByName(type, param.Name!, out var variable) ? variable : chain.FindVariable(type);
     }
 
     public bool TrySetArgument(Variable variable)
@@ -245,12 +242,10 @@ public class MethodCall : Frame
             return string.Empty;
         }
 
-#if !NET4x
         if (ReturnVariable.VariableType.IsValueTuple())
         {
             return $"{ReturnVariable.Usage} = ";
         }
-#endif
 
 
         switch (ReturnAction)
@@ -379,13 +374,8 @@ public class MethodCall : Frame
         }
 
         return IsAsync
-#if NET461 || NET48
-                ? $"var {ReturnVariable.Usage} = await {InvocationCode(method)}.ConfigureAwait(false)"
-                : $"var {ReturnVariable.Usage} = {InvocationCode(method)}.ConfigureAwait(false)";
-#else
             ? $"var {ReturnVariable.Usage} = await {InvocationCode(method)}"
             : $"var {ReturnVariable.Usage} = {InvocationCode(method)}";
-#endif
     }
 
     private string determineTarget()
@@ -397,7 +387,7 @@ public class MethodCall : Frame
 
         var target = Method.IsStatic
             ? HandlerType.FullNameInCode()
-            : Target.Usage;
+            : Target!.Usage;
 
         return target + ".";
     }

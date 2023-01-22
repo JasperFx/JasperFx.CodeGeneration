@@ -31,7 +31,7 @@ public class SourceWriter : ISourceWriter, IDisposable
         _writer.WriteLine();
     }
 
-    public void Write(string text = null)
+    public void Write(string? text = null)
     {
         if (text.IsEmpty())
         {
@@ -68,7 +68,7 @@ public class SourceWriter : ISourceWriter, IDisposable
         _writer.WriteLine(_leadingSpaces + text);
     }
 
-    public void FinishBlock(string extra = null)
+    public void FinishBlock(string? extra = null)
     {
         if (IndentionLevel == 0)
         {

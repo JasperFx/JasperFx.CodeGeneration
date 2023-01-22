@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JasperFx.CodeGeneration.Model;
 using JasperFx.Core;
@@ -9,7 +10,7 @@ namespace JasperFx.CodeGeneration.Frames;
 public abstract class TemplateFrame : SyncFrame
 {
     private readonly IList<VariableProxy> _proxies = new List<VariableProxy>();
-    private string _template;
+    private string? _template;
 
     protected abstract string Template();
 
@@ -31,7 +32,7 @@ public abstract class TemplateFrame : SyncFrame
 
     public sealed override void GenerateCode(GeneratedMethod method, ISourceWriter writer)
     {
-        var code = _template;
+        var code = _template!;
         foreach (var proxy in _proxies) code = proxy.Substitute(code);
 
         writer.Write(code);
@@ -48,8 +49,8 @@ public abstract class TemplateFrame : SyncFrame
 
 public class VariableProxy
 {
-    private readonly string _name;
-    private readonly string _substitution;
+    private readonly string? _name;
+    private readonly string? _substitution;
     private readonly Type _variableType;
 
     public VariableProxy(int index, Type variableType)
@@ -67,10 +68,11 @@ public class VariableProxy
         _name = name;
     }
 
-    public Variable Variable { get; private set; }
+    public Variable? Variable { get; private set; }
 
     public int Index { get; }
 
+    [MemberNotNull(nameof(Variable))]
     public Variable Resolve(IMethodVariables variables)
     {
         Variable = _name.IsEmpty()
@@ -82,11 +84,11 @@ public class VariableProxy
 
     public override string ToString()
     {
-        return _substitution;
+        return _substitution!;
     }
 
     public string Substitute(string code)
     {
-        return code.Replace(_substitution, Variable.Usage);
+        return code.Replace(_substitution!, Variable!.Usage);
     }
 }

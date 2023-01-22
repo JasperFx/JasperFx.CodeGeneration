@@ -17,7 +17,7 @@ public class DynamicCodeBuilder
         Collections = collections;
     }
 
-    public IServiceVariableSource ServiceVariableSource { get; set; }
+    public IServiceVariableSource? ServiceVariableSource { get; set; }
 
     public string[] ChildNamespaces => Collections.Select(x => x.ChildNamespace).ToArray();
 
@@ -109,7 +109,7 @@ public class DynamicCodeBuilder
     /// </summary>
     /// <param name="withAssembly"></param>
     /// <exception cref="GeneratorCompilationFailureException"></exception>
-    public void TryBuildAndCompileAll(Action<GeneratedAssembly, IServiceVariableSource> withAssembly)
+    public void TryBuildAndCompileAll(Action<GeneratedAssembly, IServiceVariableSource?> withAssembly)
     {
         foreach (var collection in Collections)
         {
@@ -133,7 +133,7 @@ public class DynamicCodeBuilder
     ///     The assembly containing the pre-built types. If null, this falls back to the entry assembly of
     ///     the running application
     /// </param>
-    public async Task LoadPrebuiltTypes(Assembly assembly = null)
+    public async Task LoadPrebuiltTypes(Assembly? assembly = null)
     {
         foreach (var collection in Collections)
         {

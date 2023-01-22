@@ -20,9 +20,9 @@ public class ReturnFrame : SyncFrame
         ReturnedVariable = returnVariable;
     }
 
-    public Type ReturnType { get; }
+    public Type? ReturnType { get; }
 
-    public Variable ReturnedVariable { get; private set; }
+    public Variable? ReturnedVariable { get; private set; }
 
 
     public override void GenerateCode(GeneratedMethod method, ISourceWriter writer)

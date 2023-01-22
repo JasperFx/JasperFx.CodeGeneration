@@ -5,7 +5,7 @@ namespace JasperFx.CodeGeneration;
 
 public static class CodeFormatter
 {
-    public static string Write(object value)
+    public static string Write(object? value)
     {
         if (value == null)
         {
@@ -32,6 +32,6 @@ public static class CodeFormatter
             return $"typeof({t.FullNameInCode()})";
         }
 
-        return value.ToString();
+        return value.ToString()!;
     }
 }

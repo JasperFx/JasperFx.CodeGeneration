@@ -69,13 +69,13 @@ public static class ReflectionExtensions
             var cleanName = type.Name.Split('`').First();
             if (type.IsNested && type.DeclaringType?.IsGenericTypeDefinition == true)
             {
-                cleanName = $"{type.ReflectedType.NameInCode(type.GetGenericArguments())}.{cleanName}";
+                cleanName = $"{type.ReflectedType!.NameInCode(type.GetGenericArguments())}.{cleanName}";
                 return $"{type.Namespace}.{cleanName}";
             }
 
             if (type.IsNested)
             {
-                cleanName = $"{type.ReflectedType.NameInCode()}.{cleanName}";
+                cleanName = $"{type.ReflectedType!.NameInCode()}.{cleanName}";
             }
 
             var args = type.GetGenericArguments().Select(x => x.FullNameInCode()).Join(", ");
@@ -120,7 +120,7 @@ public static class ReflectionExtensions
 
                 if (type.IsNested)
                 {
-                    cleanName = $"{type.ReflectedType.NameInCode()}.{cleanName}";
+                    cleanName = $"{type.ReflectedType!.NameInCode()}.{cleanName}";
                 }
 
                 return cleanName;
@@ -130,7 +130,7 @@ public static class ReflectionExtensions
                 var cleanName = type.Name.Split('`').First().Replace("+", ".");
                 if (type.IsNested)
                 {
-                    cleanName = $"{type.ReflectedType.NameInCode()}.{cleanName}";
+                    cleanName = $"{type.ReflectedType!.NameInCode()}.{cleanName}";
                 }
 
                 var args = type.GetGenericArguments().Select(x => x.FullNameInCode()).Join(", ");
@@ -141,7 +141,7 @@ public static class ReflectionExtensions
 
         if (type.MemberType == MemberTypes.NestedType)
         {
-            return $"{type.ReflectedType.NameInCode()}.{type.Name}";
+            return $"{type.ReflectedType!.NameInCode()}.{type.Name}";
         }
 
         return type.Name.Replace("+", ".").Replace("`", "_");
@@ -186,7 +186,7 @@ public static class ReflectionExtensions
 
                     if (type.IsNested)
                     {
-                        cleanName = $"{type.ReflectedType.NameInCode()}.{cleanName}";
+                        cleanName = $"{type.ReflectedType!.NameInCode()}.{cleanName}";
                     }
 
                     return cleanName;
@@ -196,7 +196,7 @@ public static class ReflectionExtensions
                     var cleanName = type.Name.Split('`').First().Replace("+", ".");
                     if (type.IsNested)
                     {
-                        cleanName = $"{type.ReflectedType.NameInCode()}.{cleanName}";
+                        cleanName = $"{type.ReflectedType!.NameInCode()}.{cleanName}";
                     }
 
                     var args = type.GetGenericArguments().Select(x => x.ShortNameInCode()).Join(", ");
@@ -207,7 +207,7 @@ public static class ReflectionExtensions
 
             if (type.MemberType == MemberTypes.NestedType)
             {
-                return $"{type.ReflectedType.NameInCode()}.{type.Name}";
+                return $"{type.ReflectedType!.NameInCode()}.{type.Name}";
             }
 
             return type.Name.Replace("+", ".");

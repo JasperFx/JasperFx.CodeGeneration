@@ -8,7 +8,6 @@ using JasperFx.Core;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 
-#nullable enable
 
 namespace JasperFx.RuntimeCompiler
 {
@@ -28,7 +27,7 @@ namespace JasperFx.RuntimeCompiler
                         
                 var compiler = new AssemblyGenerator();
                 compiler.Compile(generatedAssembly, serviceVariables);
-                await file.AttachTypes(rules, generatedAssembly.Assembly, services, @namespace);
+                await file.AttachTypes(rules, generatedAssembly.Assembly!, services, @namespace);
 
                 return;
             }
@@ -55,7 +54,7 @@ namespace JasperFx.RuntimeCompiler
                 var compiler = new AssemblyGenerator();
                 compiler.Compile(generatedAssembly, serviceVariables);
                 
-                await file.AttachTypes(rules, generatedAssembly.Assembly, services, @namespace);
+                await file.AttachTypes(rules, generatedAssembly.Assembly!, services, @namespace);
 
                 if (rules.SourceCodeWritingEnabled)
                 {
@@ -97,7 +96,7 @@ namespace JasperFx.RuntimeCompiler
                         
                 var compiler = new AssemblyGenerator();
                 compiler.Compile(generatedAssembly, serviceVariables);
-                file.AttachTypesSynchronously(rules, generatedAssembly.Assembly, services, @namespace);
+                file.AttachTypesSynchronously(rules, generatedAssembly.Assembly!, services, @namespace);
 
                 return;
             }
@@ -124,7 +123,7 @@ namespace JasperFx.RuntimeCompiler
                 var compiler = new AssemblyGenerator();
                 compiler.Compile(generatedAssembly, serviceVariables);
                 
-                file.AttachTypesSynchronously(rules, generatedAssembly.Assembly, services, @namespace);
+                file.AttachTypesSynchronously(rules, generatedAssembly.Assembly!, services, @namespace);
 
                 if (rules.SourceCodeWritingEnabled)
                 {

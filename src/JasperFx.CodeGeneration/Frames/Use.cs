@@ -9,7 +9,7 @@ namespace JasperFx.CodeGeneration.Frames;
 /// </summary>
 public class Use
 {
-    private readonly string _variableName;
+    private readonly string? _variableName;
 
     private readonly Type _variableType;
 
@@ -18,7 +18,7 @@ public class Use
         _variableType = variableType;
     }
 
-    public Use(Type variableType, string variableName)
+    public Use(Type variableType, string? variableName)
     {
         _variableType = variableType;
         _variableName = variableName;
@@ -31,7 +31,7 @@ public class Use
             : variables.FindVariable(_variableType);
     }
 
-    public static Use Type<T>(string variableName = null)
+    public static Use Type<T>(string? variableName = null)
     {
         return new Use(typeof(T), variableName);
     }

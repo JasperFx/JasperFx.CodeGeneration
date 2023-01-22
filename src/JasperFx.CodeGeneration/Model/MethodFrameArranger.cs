@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JasperFx.CodeGeneration.Frames;
 using JasperFx.Core;
@@ -9,11 +10,11 @@ namespace JasperFx.CodeGeneration.Model;
 internal class MethodFrameArranger : IMethodVariables
 {
     private readonly IGeneratedMethod _method;
-    private readonly IServiceVariableSource _services;
+    private readonly IServiceVariableSource? _services;
     private readonly IGeneratedType _type;
     private readonly Dictionary<Type, Variable> _variables = new();
 
-    public MethodFrameArranger(IGeneratedMethod method, IGeneratedType type, IServiceVariableSource services) :
+    public MethodFrameArranger(IGeneratedMethod method, IGeneratedType type, IServiceVariableSource? services) :
         this(method, type)
     {
         _services = services;
@@ -37,9 +38,9 @@ internal class MethodFrameArranger : IMethodVariables
 
     public Variable FindVariable(Type type)
     {
-        if (_variables.ContainsKey(type))
+        if (_variables.TryGetValue(type, out var value))
         {
-            return _variables[type];
+            return value;
         }
 
         var variable = findVariable(type, VariableSource.All);
@@ -54,7 +55,7 @@ internal class MethodFrameArranger : IMethodVariables
     }
 
 
-    public bool TryFindVariableByName(Type dependency, string name, out Variable variable)
+    public bool TryFindVariableByName(Type dependency, string name, [NotNullWhen(true)]out Variable? variable)
     {
         variable = null;
 
@@ -81,11 +82,11 @@ internal class MethodFrameArranger : IMethodVariables
         return false;
     }
 
-    public Variable TryFindVariable(Type type, VariableSource source)
+    public Variable? TryFindVariable(Type type, VariableSource source)
     {
-        if (_variables.ContainsKey(type))
+        if (_variables.TryGetValue(type, out var value))
         {
-            return _variables[type];
+            return value;
         }
 
         var variable = findVariable(type, source);
@@ -200,7 +201,7 @@ internal class MethodFrameArranger : IMethodVariables
     }
 
 
-    private Variable findVariable(Type type, VariableSource variableSource)
+    private Variable? findVariable(Type type, VariableSource variableSource)
     {
         var argument = _method.Arguments.Concat(_method.DerivedVariables).FirstOrDefault(x => x.VariableType == type);
         if (argument != null)

@@ -10,9 +10,9 @@ public interface ICodeFile
 
     void AssembleTypes(GeneratedAssembly assembly);
 
-    Task<bool> AttachTypes(GenerationRules rules, Assembly assembly, IServiceProvider services,
+    Task<bool> AttachTypes(GenerationRules rules, Assembly assembly, IServiceProvider? services,
         string containingNamespace);
 
-    bool AttachTypesSynchronously(GenerationRules rules, Assembly assembly, IServiceProvider services,
+    bool AttachTypesSynchronously(GenerationRules rules, Assembly assembly, IServiceProvider? services,
         string containingNamespace);
 }

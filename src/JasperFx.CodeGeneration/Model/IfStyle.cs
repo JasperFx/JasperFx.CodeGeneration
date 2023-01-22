@@ -18,7 +18,7 @@ public class IfStyle
 
     public string Code { get; }
 
-    public void Open(ISourceWriter writer, string condition)
+    public void Open(ISourceWriter writer, string? condition)
     {
         if (_writes)
         {

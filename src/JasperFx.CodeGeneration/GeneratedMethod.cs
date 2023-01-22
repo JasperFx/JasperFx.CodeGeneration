@@ -20,8 +20,9 @@ public interface IGeneratedMethod
 public class GeneratedMethod : IGeneratedMethod
 {
     private AsyncMode _asyncMode = AsyncMode.None;
-    private readonly MethodInfo _parentMethod;
-    private Frame _top;
+    private readonly MethodInfo? _parentMethod;
+    
+    private Frame? _top;
 
     public GeneratedMethod(MethodInfo method)
     {
@@ -63,9 +64,10 @@ public class GeneratedMethod : IGeneratedMethod
         set => _asyncMode = value;
     }
 
-    public Variable ReturnVariable { get; set; }
+    public Variable? ReturnVariable { get; set; }
 
-    public GeneratedType ParentType { get; set; }
+    // TODO NRT -- required property candidate
+    public GeneratedType ParentType { get; set; } = null!;
 
     public Argument[] Arguments { get; }
 
@@ -162,7 +164,7 @@ public class GeneratedMethod : IGeneratedMethod
             : ReturnType.FullNameInCode();
     }
 
-    public void ArrangeFrames(GeneratedType type, IServiceVariableSource services)
+    public void ArrangeFrames(GeneratedType type, IServiceVariableSource? services)
     {
         if (!Frames.Any())
         {
