@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -12,7 +13,7 @@ namespace JasperFx.CodeGeneration.Model;
 
 public class Variable
 {
-    private Frame _frame;
+    private Frame? _frame;
 
     public Variable(Type variableType) : this(variableType, DefaultArgName(variableType))
     {
@@ -24,7 +25,7 @@ public class Variable
         Usage = usage;
     }
 
-    public Variable(Type variableType, string usage, Frame creator) : this(variableType, usage)
+    public Variable(Type variableType, string usage, Frame? creator) : this(variableType, usage)
     {
         if (creator != null)
         {
@@ -38,7 +39,7 @@ public class Variable
     {
     }
 
-    public Frame Creator
+    public Frame? Creator
     {
         get => _frame;
         protected set
@@ -76,7 +77,7 @@ public class Variable
             .ToArray();
     }
 
-    public static Variable For<T>(string variableName = null)
+    public static Variable For<T>(string? variableName = null)
     {
         return new Variable(typeof(T), variableName ?? DefaultArgName(typeof(T)));
     }
@@ -86,12 +87,12 @@ public class Variable
     {
         if (argType.IsArray)
         {
-            return DefaultArgName(argType.GetElementType()) + "Array";
+            return DefaultArgName(argType.GetElementType()!) + "Array";
         }
 
         if (argType.IsEnumerable())
         {
-            var argPrefix = DefaultArgName(argType.DetermineElementType());
+            var argPrefix = DefaultArgName(argType.DetermineElementType()!);
             var suffix = argType.GetGenericTypeDefinition().Name.Split('`').First();
 
             return argPrefix + suffix;
@@ -139,7 +140,7 @@ public class Variable
         return VariableType == other.VariableType && string.Equals(Usage, other.Usage);
     }
 
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
         if (ReferenceEquals(null, obj))
         {

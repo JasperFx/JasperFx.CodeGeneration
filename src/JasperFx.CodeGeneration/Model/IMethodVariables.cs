@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace JasperFx.CodeGeneration.Model;
 
@@ -29,7 +30,7 @@ public interface IMethodVariables
     /// <param name="name"></param>
     /// <param name="variable"></param>
     /// <returns></returns>
-    bool TryFindVariableByName(Type dependency, string name, out Variable variable);
+    bool TryFindVariableByName(Type dependency, string name, [NotNullWhen(true)]out Variable? variable);
 
     /// <summary>
     ///     Try to find a variable by type and variable source. Use this when
@@ -39,5 +40,5 @@ public interface IMethodVariables
     /// <param name="type"></param>
     /// <param name="source"></param>
     /// <returns></returns>
-    Variable TryFindVariable(Type type, VariableSource source);
+    Variable? TryFindVariable(Type type, VariableSource source);
 }

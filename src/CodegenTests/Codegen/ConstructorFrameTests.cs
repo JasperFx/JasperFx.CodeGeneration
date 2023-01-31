@@ -277,7 +277,7 @@ public class ConstructorFrameTests
         type.SourceCode.ShouldContain(
             "await using var asyncGuy = new CodegenTests.Codegen.ConstructorFrameTests.AsyncGuy();");
 
-        var handler = (IHandler)Activator.CreateInstance(type.CompiledType);
+        var handler = (IHandler)Activator.CreateInstance(type.CompiledType)!;
 
         await handler.DoStuff();
 

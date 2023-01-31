@@ -49,7 +49,7 @@ public abstract class Frame
     protected readonly IList<Frame> dependencies = new List<Frame>();
     protected internal readonly IList<Variable> uses = new List<Variable>();
     private bool _hasResolved;
-    private Frame _next;
+    private Frame? _next;
 
     protected Frame(bool isAsync)
     {
@@ -59,7 +59,7 @@ public abstract class Frame
     public bool IsAsync { get; protected set; }
     public bool Wraps { get; protected set; } = false;
 
-    public Frame Next
+    public Frame? Next
     {
         get => _next;
         set

@@ -67,7 +67,7 @@ public class GenerationRules
 
     public string GeneratedCodeOutputPath { get; set; } = "Internal/Generated";
 
-    public Assembly ApplicationAssembly { get; set; } = Assembly.GetEntryAssembly();
+    public Assembly ApplicationAssembly { get; set; } = Assembly.GetEntryAssembly()!;
 
     /// <summary>
     ///     Reference the given assembly in the compilation

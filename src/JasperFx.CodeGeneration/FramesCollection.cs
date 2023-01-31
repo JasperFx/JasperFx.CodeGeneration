@@ -12,10 +12,11 @@ public class FramesCollection : List<Frame>
     {
         ParentMethod = parentMethod;
     }
-
+#nullable disable
     public FramesCollection()
     {
     }
+#nullable enable
 
     public GeneratedMethod ParentMethod { get; }
 
@@ -58,7 +59,7 @@ public class FramesCollection : List<Frame>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
     public FramesCollection CallConstructor<T>(Expression<Func<T>> constructor,
-        Action<ConstructorFrame<T>> configure = null)
+        Action<ConstructorFrame<T>>? configure = null)
     {
         var frame = new ConstructorFrame<T>(constructor);
         configure?.Invoke(frame);
@@ -96,7 +97,7 @@ public class FramesCollection : List<Frame>
     /// <param name="configure">Optional configuration of the MethodCall</param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public FramesCollection Call<T>(Expression<Action<T>> expression, Action<MethodCall> configure = null)
+    public FramesCollection Call<T>(Expression<Action<T>> expression, Action<MethodCall>? configure = null)
     {
         var call = MethodCall.For(expression);
         configure?.Invoke(call);

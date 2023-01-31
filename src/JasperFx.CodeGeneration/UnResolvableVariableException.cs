@@ -19,10 +19,10 @@ public class UnResolvableVariableException : Exception
     }
 
     public Type DependencyType { get; }
-    public string VariableName { get; }
+    public string? VariableName { get; }
     public IGeneratedMethod Method { get; }
 
-    public GeneratedType Type { get; set; }
+    public GeneratedType? Type { get; set; }
 
     public override string Message
     {

@@ -15,7 +15,7 @@ namespace GeneratorTarget
 
     public class GreeterFile : ICodeFile
     {
-        private GeneratedType _type;
+        private GeneratedType? _type;
 
         public GreeterFile(string name)
         {
@@ -33,7 +33,7 @@ namespace GeneratorTarget
             method.Frames.Code($"return \"{FileName}\";");
         }
 
-        public Task<bool> AttachTypes(GenerationRules rules, Assembly assembly, IServiceProvider services,
+        public Task<bool> AttachTypes(GenerationRules rules, Assembly assembly, IServiceProvider? services,
             string containingNamespace)
         {
             var typeName = $"{containingNamespace}.{TypeName}";
@@ -47,7 +47,7 @@ namespace GeneratorTarget
             return Task.FromResult(true);
         }
 
-        public bool AttachTypesSynchronously(GenerationRules rules, Assembly assembly, IServiceProvider services,
+        public bool AttachTypesSynchronously(GenerationRules rules, Assembly assembly, IServiceProvider? services,
             string containingNamespace)
         {
             var typeName = $"{containingNamespace}.{TypeName}";
@@ -76,7 +76,7 @@ namespace GeneratorTarget
         {
             GeneratedNamespace = "Internal.Generated",
             ApplicationAssembly = typeof(GreeterGenerator).Assembly,
-            GeneratedCodeOutputPath = AppContext.BaseDirectory.ParentDirectory().ParentDirectory().ParentDirectory()
+            GeneratedCodeOutputPath = AppContext.BaseDirectory.ParentDirectory()!.ParentDirectory()!.ParentDirectory()!
                 .AppendPath("Internal", "Generated")
         };
     }
@@ -97,7 +97,7 @@ namespace GeneratorTarget
         {
             GeneratedNamespace = "Internal.Generated",
             ApplicationAssembly = typeof(GreeterGenerator).Assembly,
-            GeneratedCodeOutputPath = AppContext.BaseDirectory.ParentDirectory().ParentDirectory().ParentDirectory()
+            GeneratedCodeOutputPath = AppContext.BaseDirectory.ParentDirectory()!.ParentDirectory()!.ParentDirectory()!
                 .AppendPath("Internal", "Generated")
         };
     }

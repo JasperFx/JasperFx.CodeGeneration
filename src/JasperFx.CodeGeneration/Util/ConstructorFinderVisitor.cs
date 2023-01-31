@@ -13,13 +13,13 @@ internal class ConstructorFinderVisitor<T> : ExpressionVisitor
         _type = type;
     }
 
-    public ConstructorInfo Constructor { get; private set; }
+    public ConstructorInfo Constructor { get; private set; } = null!;
 
     protected override Expression VisitNew(NewExpression node)
     {
         if (node.Type == _type)
         {
-            Constructor = node.Constructor;
+            Constructor = node.Constructor!;
         }
 
         return base.VisitNew(node);

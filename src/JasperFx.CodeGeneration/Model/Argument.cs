@@ -12,13 +12,13 @@ public class Argument : Variable
     {
     }
 
-    public Argument(ParameterInfo parameter) : this(parameter.ParameterType, parameter.Name)
+    public Argument(ParameterInfo parameter) : this(parameter.ParameterType, parameter.Name!)
     {
     }
 
     public string Declaration => $"{VariableType.FullNameInCode()} {Usage}";
 
-    public new static Argument For<T>(string argName = null)
+    public new static Argument For<T>(string? argName = null)
     {
         return new Argument(typeof(T), argName ?? DefaultArgName(typeof(T)));
     }
@@ -28,7 +28,7 @@ public class Argument : Variable
         return VariableType == other.VariableType && string.Equals(Usage, other.Usage);
     }
 
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
         if (ReferenceEquals(null, obj))
         {

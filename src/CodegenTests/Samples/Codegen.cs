@@ -101,7 +101,7 @@ namespace Generated
 
 
         var type = assembly.GetExportedTypes().Single();
-        var operation = (IOperation)Activator.CreateInstance(type);
+        var operation = (IOperation)Activator.CreateInstance(type)!;
 
         var result = operation.Calculate(1, 2);
 

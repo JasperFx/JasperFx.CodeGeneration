@@ -10,8 +10,8 @@ internal class SourceCodeParser : IDisposable
 {
     private readonly LightweightCache<string, string> _code = new(name => "UNKNOWN");
 
-    private readonly StringWriter _current;
-    private readonly string _name;
+    private readonly StringWriter? _current;
+    private readonly string? _name;
 
     internal SourceCodeParser(string code)
     {
@@ -39,7 +39,7 @@ internal class SourceCodeParser : IDisposable
                 if (line.Trim().StartsWith("// END"))
                 {
                     var classCode = _current.ToString();
-                    _code[_name] = classCode;
+                    _code[_name!] = classCode;
 
                     _current = null;
                     _name = null;

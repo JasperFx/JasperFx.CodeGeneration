@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -19,6 +20,7 @@ public enum ConstructorCallMode
 
 public class SetterArg
 {
+    //TODO NRT - does this ctor make sense?
     public SetterArg(string propertyName, Variable variable)
     {
         PropertyName = propertyName;
@@ -37,7 +39,7 @@ public class SetterArg
         PropertyType = property.PropertyType;
     }
 
-    public SetterArg(PropertyInfo property, Variable variable)
+    public SetterArg(PropertyInfo property, Variable? variable)
     {
         PropertyName = property.Name;
         PropertyType = property.PropertyType;
@@ -45,15 +47,15 @@ public class SetterArg
     }
 
     public string PropertyName { get; }
-    public Variable Variable { get; private set; }
+    public Variable? Variable { get; private set; }
     public Type PropertyType { get; }
 
     public string Assignment()
     {
-        return $"{PropertyName} = {Variable.Usage}";
+        return $"{PropertyName} = {Variable!.Usage}";
     }
 
-
+    [MemberNotNull(nameof(Variable))]
     internal void FindVariable(IMethodVariables chain)
     {
         if (Variable == null)
@@ -65,7 +67,7 @@ public class SetterArg
 
 public class ConstructorFrame : SyncFrame
 {
-    public ConstructorFrame(ConstructorInfo ctor) : this(ctor.DeclaringType, ctor)
+    public ConstructorFrame(ConstructorInfo ctor) : this(ctor.DeclaringType!, ctor)
     {
     }
 
@@ -96,7 +98,7 @@ public class ConstructorFrame : SyncFrame
 
     public Type BuiltType { get; }
 
-    public Type DeclaredType { get; set; }
+    public Type? DeclaredType { get; set; }
 
     public ConstructorInfo Ctor { get; }
 
@@ -193,7 +195,7 @@ public class ConstructorFrame : SyncFrame
 
         foreach (var setter in Setters) setter.FindVariable(chain);
 
-        foreach (var setter in Setters) yield return setter.Variable;
+        foreach (var setter in Setters) yield return setter.Variable!;
 
 
         if (ActivatorFrames.Any())
@@ -228,12 +230,12 @@ public class ConstructorFrame : SyncFrame
             return _inner.FindVariableByName(dependency, name);
         }
 
-        public bool TryFindVariableByName(Type dependency, string name, out Variable variable)
+        public bool TryFindVariableByName(Type dependency, string name, [NotNullWhen(true)] out Variable? variable)
         {
             return _inner.TryFindVariableByName(dependency, name, out variable);
         }
 
-        public Variable TryFindVariable(Type type, VariableSource source)
+        public Variable? TryFindVariable(Type type, VariableSource source)
         {
             return _inner.TryFindVariable(type, source);
         }
@@ -251,7 +253,7 @@ public class ConstructorFrame<T> : ConstructorFrame
     {
     }
 
-    public void Set(Expression<Func<T, object>> expression, Variable variable = null)
+    public void Set(Expression<Func<T, object>> expression, Variable? variable = null)
     {
         var property = ReflectionHelper.GetProperty(expression);
         var setter = new SetterArg(property, variable);

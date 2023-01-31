@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -9,10 +10,7 @@ using JasperFx.CodeGeneration;
 using JasperFx.CodeGeneration.Model;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-
-#if !NET461
 using System.Runtime.Loader;
-#endif
 
 namespace JasperFx.RuntimeCompiler
 {
@@ -25,7 +23,7 @@ namespace JasperFx.RuntimeCompiler
 		private readonly IList<MetadataReference> _references = new List<MetadataReference>();
 		private readonly IList<Assembly> _assemblies = new List<Assembly>();
 
-		public static string[] HintPaths { get; set; }
+		public static string[]? HintPaths { get; set; }
 
 		public AssemblyGenerator()
 		{
@@ -33,14 +31,14 @@ namespace JasperFx.RuntimeCompiler
 			ReferenceAssembly(typeof(Enumerable).GetTypeInfo().Assembly);
 		}
 
-		public string AssemblyName { get; set; }
+		public string? AssemblyName { get; set; }
 
 		/// <summary>
 		/// Tells Roslyn to reference the given assembly and any of its dependencies
 		/// when compiling code
 		/// </summary>
 		/// <param name="assembly"></param>
-		public void ReferenceAssembly(Assembly assembly)
+		public void ReferenceAssembly(Assembly? assembly)
 		{
 			if (assembly == null) return;
 
@@ -78,7 +76,7 @@ namespace JasperFx.RuntimeCompiler
 			}
 		}
 
-		private static string createAssemblyReference(Assembly assembly)
+		private static string? createAssemblyReference(Assembly assembly)
 		{
 			if (assembly.IsDynamic) return null;
 
@@ -87,14 +85,14 @@ namespace JasperFx.RuntimeCompiler
 				: assembly.Location;
 		}
 
-		private static string getPath(Assembly assembly)
+		private static string? getPath(Assembly assembly)
 		{
 			return HintPaths?
 				.Select(findFile(assembly))
 				.FirstOrDefault(file => !string.IsNullOrWhiteSpace(file));
 		}
 
-		private static Func<string, string> findFile(Assembly assembly)
+		private static Func<string, string?> findFile(Assembly assembly)
 		{
 			return hintPath =>
 			{
@@ -169,9 +167,10 @@ namespace JasperFx.RuntimeCompiler
 			return context.LoadFromStream(stream);
 		}
 		
-		public string Code { get; private set; }
+		public string? Code { get; private set; }
 
-		public void Compile(GeneratedAssembly generatedAssembly, IServiceVariableSource services = null)
+		[MemberNotNull(nameof(Code))]
+		public void Compile(GeneratedAssembly generatedAssembly, IServiceVariableSource? services = null)
 		{
 			Code = generatedAssembly.GenerateCode(services);
 			
@@ -215,15 +214,16 @@ namespace JasperFx.RuntimeCompiler
 		Assembly LoadFromAssemblyPath(string assemblyName);
 	}
 
-#if !NET461
+
 	public sealed class CustomAssemblyLoadContext : AssemblyLoadContext, ILamarAssemblyLoadContext, IDisposable
 	{
+		//Should this be enabled in .NET 6+?
 		#if NET5_0
 		
 		public CustomAssemblyLoadContext() : base(true)
 		{
 		}
-#else
+        #else
 		
 		public CustomAssemblyLoadContext() : base()
 		{
@@ -272,37 +272,4 @@ namespace JasperFx.RuntimeCompiler
 			return ctx.LoadFromAssemblyPath(assemblyName);
 		}
 	}
-#else
-	public class CustomAssemblyLoadContext : ILamarAssemblyLoadContext
-	{
-		public Assembly LoadFromStream(Stream assembly)
-		{
-			if (assembly is MemoryStream memStream)
-			{
-				return Assembly.Load(memStream.ToArray());
-			}
-
-			using (var stream = new MemoryStream())
-			{
-				assembly.CopyTo(stream);
-				return Assembly.Load(stream.ToArray());
-			}
-		}
-		
-		Assembly ILamarAssemblyLoadContext.LoadFromAssemblyName(AssemblyName assemblyName)
-		{
-			return Assembly.Load(assemblyName);
-		}
-
-		public Assembly LoadFromAssemblyPath(string assemblyName)
-		{
-			return Assembly.LoadFrom(assemblyName);
-		}
-
-		public Assembly LoadFromAssemblyName(string assemblyName)
-		{
-			return Assembly.Load(assemblyName);
-		}
-	}
-#endif
 }

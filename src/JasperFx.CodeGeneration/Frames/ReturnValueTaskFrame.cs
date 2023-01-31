@@ -8,7 +8,7 @@ namespace JasperFx.CodeGeneration.Frames;
 public class ReturnValueTask : SyncFrame
 {
     private readonly Type _variableType;
-    private Variable _returnValue;
+    private Variable _returnValue = null!;
 
     public ReturnValueTask(Type variableType)
     {

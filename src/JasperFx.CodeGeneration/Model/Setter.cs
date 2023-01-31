@@ -14,10 +14,11 @@ public enum SetterType
 
 public class Setter : Variable
 {
+#nullable disable
     public Setter(Type variableType) : base(variableType)
     {
     }
-
+#nullable enable
     public Setter(Type variableType, string name) : base(variableType, name)
     {
         PropName = name;
@@ -28,9 +29,9 @@ public class Setter : Variable
     /// <summary>
     ///     Value to be set upon creating an instance of the class
     /// </summary>
-    public object InitialValue { get; set; }
+    public object? InitialValue { get; set; }
 
-    public Variable ReadOnlyValue { get; set; }
+    public Variable ReadOnlyValue { get; set; } = null!;
 
     public SetterType Type { get; set; } = SetterType.ReadWrite;
 
@@ -93,7 +94,7 @@ public class Setter : Variable
             return;
         }
 
-        var property = @object.GetType().GetProperty(Usage);
+        var property = @object.GetType().GetProperty(Usage)!;
         property.SetValue(@object, InitialValue);
     }
 

@@ -44,32 +44,33 @@ public class GeneratedType : IVariableSource, IGeneratedType
     ///         Optional code fragment to write at the beginning of this
     ///         type in code
     ///     </summary>
-    public ICodeFragment Header { get; set; }
+    public ICodeFragment? Header { get; set; }
 
     /// <summary>
     ///     Optional code fragment to write at the end of this type in code
     /// </summary>
-    public ICodeFragment Footer { get; set; }
+    public ICodeFragment? Footer { get; set; }
 
     public string TypeName { get; }
 
     public string Namespace { get; internal set; }
 
-    public Type BaseType { get; private set; }
+    public Type? BaseType { get; private set; }
 
-    public Variable[] BaseConstructorArguments { get; private set; } = new InjectedField[0];
+    public Variable[] BaseConstructorArguments { get; private set; } = Array.Empty<InjectedField>();
 
     public IEnumerable<Type> Interfaces => _interfaces;
 
 
     public IEnumerable<GeneratedMethod> Methods => _methods;
 
-    public string SourceCode { get; set; }
+    public string? SourceCode { get; set; }
 
-    public Type CompiledType { get; private set; }
+    public Type? CompiledType { get; private set; }
 
     public string FullName => $"{Namespace}.{TypeName}";
-    public GeneratedAssembly ParentAssembly { get; internal set; }
+    //TODO NRT - unusual usage, required property candidate
+    public GeneratedAssembly ParentAssembly { get; internal set; } = null!;
 
     public GenerationRules Rules { get; }
 
@@ -84,7 +85,7 @@ public class GeneratedType : IVariableSource, IGeneratedType
 
     Variable IVariableSource.Create(Type type)
     {
-        return AllInjectedFields.FirstOrDefault(x => x.ArgType == type);
+        return AllInjectedFields.FirstOrDefault(x => x.ArgType == type)!;
     }
 
     /// <summary>
@@ -114,7 +115,7 @@ public class GeneratedType : IVariableSource, IGeneratedType
         if (ctors.Length == 1)
         {
             var baseArguments = ctors.Single().GetParameters()
-                .Select(x => new InjectedField(x.ParameterType, x.Name)).ToArray();
+                .Select(x => new InjectedField(x.ParameterType, x.Name!)).ToArray();
 
             BaseConstructorArguments = baseArguments.Select(x => x.ToBaseCtorVariable()).ToArray();
 
@@ -162,7 +163,7 @@ public class GeneratedType : IVariableSource, IGeneratedType
 
     public GeneratedMethod MethodFor(string methodName)
     {
-        return _methods.FirstOrDefault(x => x.MethodName == methodName);
+        return _methods.FirstOrDefault(x => x.MethodName == methodName)!;
     }
 
     // TODO -- UT's
@@ -268,13 +269,13 @@ public class GeneratedType : IVariableSource, IGeneratedType
         foreach (var @interface in Interfaces) yield return @interface;
     }
 
-    public Type FindType(IEnumerable<Type> types)
+    public Type? FindType(IEnumerable<Type> types)
     {
         CompiledType = types.SingleOrDefault(x => x.FullName == FullName);
         return CompiledType;
     }
 
-    public void ArrangeFrames(IServiceVariableSource services = null)
+    public void ArrangeFrames(IServiceVariableSource? services = null)
     {
         foreach (var method in _methods.Where(x => x.WillGenerate())) method.ArrangeFrames(this, services);
     }
@@ -296,7 +297,7 @@ public class GeneratedType : IVariableSource, IGeneratedType
             throw new InvalidOperationException("This generated assembly has not yet been successfully compiled");
         }
 
-        return (T)Activator.CreateInstance(CompiledType, arguments);
+        return (T)Activator.CreateInstance(CompiledType, arguments)!;
     }
 
     public void ApplySetterValues(object builtObject)

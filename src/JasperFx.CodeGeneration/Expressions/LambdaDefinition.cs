@@ -14,9 +14,9 @@ public class LambdaDefinition
     /// <summary>
     ///     This could be anything that your IResolverFrame wants to depend on
     /// </summary>
-    public object Context { get; set; }
+    public object? Context { get; set; }
 
-    public ParameterExpression[] Arguments { get; set; } = new ParameterExpression[0];
+    public ParameterExpression[] Arguments { get; set; } = Array.Empty<ParameterExpression>();
 
     public IList<Expression> Body { get; } = new List<Expression>();
 

@@ -30,18 +30,18 @@ public class GeneratedAssembly
 
     public GenerationRules Rules { get; }
 
-    public Assembly Assembly { get; private set; }
+    public Assembly? Assembly { get; private set; }
 
     /// <summary>
     ///     Optional code fragment to write at the beginning of this
     ///     code file
     /// </summary>
-    public ICodeFragment Header { get; set; }
+    public ICodeFragment? Header { get; set; }
 
     /// <summary>
     ///     Optional code fragment to write at the end of this code file
     /// </summary>
-    public ICodeFragment Footer { get; set; }
+    public ICodeFragment? Footer { get; set; }
 
     /// <summary>
     ///     Extra namespaces to be written out as using blocks
@@ -86,7 +86,7 @@ public class GeneratedAssembly
         Assembly = assembly;
     }
 
-    public string GenerateCode(IServiceVariableSource services = null)
+    public string GenerateCode(IServiceVariableSource? services = null)
     {
         foreach (var generatedType in GeneratedTypes)
         {
@@ -142,7 +142,7 @@ public class GeneratedAssembly
             .Distinct()
             .Where(x => x.IsNotEmpty()) // weed out blank namespaces, thank you F#!
             .ToList();
-        return namespaces;
+        return namespaces!;
     }
 
     private void attachSourceCodeToTypes(ref string code)

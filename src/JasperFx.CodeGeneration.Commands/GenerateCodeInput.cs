@@ -8,6 +8,6 @@ namespace JasperFx.CodeGeneration.Commands
         public CodeAction Action { get; set; } = CodeAction.preview;
         
         [Description("Optionally limit the preview to only one type of code generation")]
-        public string TypeFlag { get; set; }
+        public string? TypeFlag { get; set; }
     }
 }
