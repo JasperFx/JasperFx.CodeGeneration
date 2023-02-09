@@ -26,6 +26,14 @@ public class MethodCallTester
     }
 
     [Fact]
+    public void creates_new_by_return_value()
+    {
+        var call = MethodCall.For<MethodCallTarget>(x => x.GetValue());
+        call.CreatesNewOf<string>().ShouldBeTrue();
+        call.CreatesNewOf<int>().ShouldBeFalse();
+    }
+
+    [Fact]
     public void determine_return_value_of_not_simple_type()
     {
         var call = MethodCall.For<MethodCallTarget>(x => x.GetError());
@@ -52,6 +60,8 @@ public class MethodCallTester
         call.ReturnVariable.VariableType.ShouldBe(typeof(string));
         call.ReturnVariable.Usage.ShouldBe("result_of_GetString");
         call.ReturnVariable.Creator.ShouldBeSameAs(call);
+        
+        call.CreatesNewOf<string>().ShouldBeTrue();
     }
 
 
@@ -219,6 +229,9 @@ public class MethodCallTester
     public void use_with_output_arguments_and_no_return_value()
     {
         var call = new MethodCall(typeof(MethodCallTarget), nameof(MethodCallTarget.WithOuts));
+        
+        // should return true for an output variable
+        call.CreatesNewOf<int>().ShouldBeTrue();
 
         call.ReturnVariable.ShouldBeNull();
 

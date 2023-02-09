@@ -67,7 +67,7 @@ public abstract class Frame
             if (_next != null)
             {
                 throw new InvalidOperationException(
-                    $"Frame chain is being re-arranged, tried to set {value} as the 'Next");
+                    $"Frame chain is being re-arranged, tried to set {value} as the 'Next' property on {this}");
             }
 
             _next = value;

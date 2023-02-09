@@ -18,6 +18,14 @@ public class when_building_a_method_call_for_a_tuple
         theCall.ReturnVariable.Usage.ShouldBe("(var mauve, var blue, var green)");
     }
 
+    [Fact]
+    public void the_creates_new_of_applies_to_tuple_values()
+    {
+        theCall.CreatesNewOf<Blue>().ShouldBeTrue();
+        theCall.CreatesNewOf<Red>().ShouldBeTrue();
+        theCall.CreatesNewOf<Green>().ShouldBeTrue();
+    }
+
 
     [Fact]
     public void return_variable_usage()

@@ -87,6 +87,28 @@ public class MethodCall : Frame
             }
         }
     }
+    
+    /// <summary>
+    /// Does this MethodCall create a new variable of the object type? This includes the return variable, destructuring
+    /// tuples, or out parameters
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public bool CreatesNewOf<T>()
+    {
+        return CreatesNewOf(typeof(T));
+    }
+
+    /// <summary>
+    /// Does this MethodCall create a new variable of the object type? This includes the return variable, destructuring
+    /// tuples, or out parameters
+    /// </summary>
+    /// <param name="objectType"></param>
+    /// <returns></returns>
+    public bool CreatesNewOf(Type objectType)
+    {
+        return ReturnVariable?.VariableType == objectType || Creates.Any(x => x.VariableType == objectType);
+    }
 
     public Dictionary<Type, Type> Aliases { get; } = new();
 
