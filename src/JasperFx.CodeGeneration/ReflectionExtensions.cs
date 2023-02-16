@@ -73,19 +73,29 @@ public static class ReflectionExtensions
                 return $"{type.Namespace}.{cleanName}";
             }
 
+            var args = type.GetGenericArguments().Select(x => x.FullNameInCode()).Join(", ");
+
             if (type.IsNested)
             {
-                cleanName = $"{type.ReflectedType!.NameInCode()}.{cleanName}";
+                return $"{type.ReflectedType.FullNameInCode()}.{cleanName}<{args}>";
             }
-
-            var args = type.GetGenericArguments().Select(x => x.FullNameInCode()).Join(", ");
 
             return $"{type.Namespace}.{cleanName}<{args}>";
         }
 
+        if (type.IsOpenGeneric())
+        {
+            return type.Namespace + "." + type.NameInCode();
+        }
+        
         if (type.FullName == null)
         {
             return type.Name;
+        }
+
+        if (type.IsNested)
+        {
+            return $"{type.ReflectedType!.FullNameInCode()}.{type.Name}";
         }
 
         return type.FullName.Replace("+", ".");

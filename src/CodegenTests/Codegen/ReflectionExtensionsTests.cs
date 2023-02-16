@@ -31,6 +31,22 @@ public class ReflectionExtensionsTests
 
         createdName.ShouldBe("ReflectionExtensionsTests.Envelope<>");
     }
+    
+    [Fact]
+    public void short_name_of_open_generic_type_inner()
+    {
+        var createdName = typeof(Envelope<>.Inner).ShortNameInCode();
+
+        createdName.ShouldBe("ReflectionExtensionsTests.Envelope<>.Inner");
+    }
+    
+    [Fact]
+    public void full_name_of_open_generic_type_inner()
+    {
+        var createdName = typeof(Envelope<>.Inner).FullNameInCode();
+
+        createdName.ShouldBe("CodegenTests.Codegen.ReflectionExtensionsTests.Envelope<>.Inner");
+    }
 
     [Fact]
     public void get_full_name_in_code_for_inner_generic_type()
@@ -140,6 +156,8 @@ public class ReflectionExtensionsTests
     {
         public T Value { get; set; }
         public Guid ExecutingUserId { get; set; }
+        
+        public class Inner{}
     }
 
     public class Created
