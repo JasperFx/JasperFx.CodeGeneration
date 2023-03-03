@@ -1,8 +1,11 @@
-﻿namespace JasperFx.CodeGeneration.Model;
+﻿using System;
+
+namespace JasperFx.CodeGeneration.Model;
 
 public interface IServiceVariableSource : IVariableSource
 {
-    void ReplaceVariables();
+    void ReplaceVariables(IMethodVariables method);
+
     void StartNewType();
     void StartNewMethod();
 }

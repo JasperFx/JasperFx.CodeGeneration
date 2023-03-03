@@ -136,7 +136,7 @@ internal class MethodFrameArranger : IMethodVariables
 
         // Step 1a;) -- figure out if you can switch to inline service
         // creation instead of the container.
-        _services?.ReplaceVariables();
+        _services?.ReplaceVariables(this);
 
         // Step 2, calculate dependencies
         var dependencies = new DependencyGatherer(this, frames);
