@@ -150,4 +150,17 @@ public abstract class Frame
             frame = frame.Next;
         }
     }
+
+    internal IEnumerable<Variable> AllVariables()
+    {
+        foreach (var variable in creates)
+        {
+            yield return variable;
+        }
+
+        foreach (var variable in uses)
+        {
+            yield return variable;
+        }
+    }
 }

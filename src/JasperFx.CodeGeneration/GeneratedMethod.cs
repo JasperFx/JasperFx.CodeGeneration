@@ -199,4 +199,22 @@ public class GeneratedMethod : IGeneratedMethod
     {
         Frames.Return(ReturnType);
     }
+
+    public IEnumerable<Assembly> AllReferencedAssemblies()
+    {
+        return findAllReferencedAssemblies().Distinct();
+    }
+
+    public IEnumerable<Assembly> findAllReferencedAssemblies()
+    {
+        foreach (var frame in Frames)
+        {
+            foreach (var variable in frame.AllVariables())
+            {
+                yield return variable.VariableType.Assembly;
+            }
+
+            if (frame is MethodCall c) yield return c.HandlerType.Assembly;
+        }
+    }
 }

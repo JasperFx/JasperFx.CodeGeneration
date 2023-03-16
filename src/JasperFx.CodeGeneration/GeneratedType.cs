@@ -323,4 +323,9 @@ public class GeneratedType : IVariableSource, IGeneratedType
         BaseConstructorArguments[index] = variable;
         AllInjectedFields.RemoveAt(index);
     }
+
+    internal IEnumerable<Assembly> AllReferencedAssemblies()
+    {
+        return _methods.SelectMany(m => m.AllReferencedAssemblies()).Distinct();
+    }
 }

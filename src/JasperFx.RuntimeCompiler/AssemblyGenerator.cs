@@ -188,6 +188,11 @@ namespace JasperFx.RuntimeCompiler
 				generator1.ReferenceAssembly(assembly2);
 			}
 
+			foreach (var referencedAssembly in generatedAssembly.AllReferencedAssemblies())
+			{
+				generator1.ReferenceAssembly(referencedAssembly);
+			}
+
 			var assemblies = generatedAssembly.GeneratedTypes
 				.SelectMany(x => x.AssemblyReferences())
 				.Distinct().ToArray();
