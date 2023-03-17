@@ -277,7 +277,20 @@ public class GeneratedType : IVariableSource, IGeneratedType
 
     public void ArrangeFrames(IServiceVariableSource? services = null)
     {
-        foreach (var method in _methods.Where(x => x.WillGenerate())) method.ArrangeFrames(this, services);
+        foreach (var method in _methods.Where(x => x.WillGenerate()))
+        {
+            method.ArrangeFrames(this, services);
+        }
+
+        var duplicateFields = AllInjectedFields.GroupBy(x => x.Usage).Where(x => x.Count() > 1);
+        foreach (var group in duplicateFields)
+        {
+            var i = 0;
+            foreach (var field in group)
+            {
+                field.OverrideName(field.Usage + (++i));
+            }
+        }
     }
 
     public IEnumerable<Assembly> AssemblyReferences()

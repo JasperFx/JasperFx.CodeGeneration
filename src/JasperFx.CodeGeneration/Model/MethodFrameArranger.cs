@@ -98,29 +98,9 @@ internal class MethodFrameArranger : IMethodVariables
         return variable;
     }
 
-
     public void Arrange(out AsyncMode asyncMode, out Frame topFrame)
     {
         var compiled = compileFrames(_method.Frames);
-
-        // Disambiguate all variable names
-        var groups = compiled
-            .SelectMany(x => x.AllVariables())
-            .Concat(_variables.Values)
-            .Distinct().GroupBy(x => x.Usage)
-            .Where(x => x.Count() > 2)
-            .ToArray();
-        
-        foreach (var group in groups)
-        {
-            var i = 1;
-            foreach (var variable in group)
-            {
-                variable.OverrideName(variable.Usage + i);
-                i++;
-            }
-        }
-        
         asyncMode = AsyncMode.AsyncTask;
 
         if (compiled.All(x => !x.IsAsync))
