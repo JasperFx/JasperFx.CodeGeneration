@@ -215,6 +215,8 @@ public class GeneratedMethod : IGeneratedMethod
             }
 
             if (frame is MethodCall c) yield return c.HandlerType.Assembly;
+
+            if (frame is ConstructorFrame ctor) yield return ctor.BuiltType.Assembly;
         }
     }
 }
