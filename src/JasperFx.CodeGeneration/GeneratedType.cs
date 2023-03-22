@@ -13,6 +13,7 @@ public interface IGeneratedType
     IList<Setter> Setters { get; }
     IList<InjectedField> AllInjectedFields { get; }
     GenerationRules Rules { get; }
+    string TypeName { get; }
 }
 
 [DebuggerDisplay("GeneratedType: {BaseType}")]
@@ -50,7 +51,7 @@ public class GeneratedType : IVariableSource, IGeneratedType
     ///     Optional code fragment to write at the end of this type in code
     /// </summary>
     public ICodeFragment? Footer { get; set; }
-
+    
     public string TypeName { get; }
 
     public string Namespace { get; internal set; }
@@ -95,6 +96,15 @@ public class GeneratedType : IVariableSource, IGeneratedType
     public void CommentType(string text)
     {
         Header = new OneLineComment(text);
+    }
+    
+    /// <summary>
+    ///     Add a multi line comment as the header to this type
+    /// </summary>
+    /// <param name="text"></param>
+    public void MultiLineCommentType(string text)
+    {
+        Header = new MultiLineComment(text);
     }
 
     public GeneratedType InheritsFrom<T>()
@@ -188,6 +198,7 @@ public class GeneratedType : IVariableSource, IGeneratedType
     public void Write(ISourceWriter writer)
     {
         Header?.Write(writer);
+        
         writeDeclaration(writer);
 
         if (AllInjectedFields.Any())

@@ -15,6 +15,11 @@ public interface IGeneratedMethod
     Argument[] Arguments { get; }
     IList<Variable> DerivedVariables { get; }
     IList<IVariableSource> Sources { get; }
+
+    /// <summary>
+    ///     The name of the method being generated
+    /// </summary>
+    string MethodName { get; }
 }
 
 public class GeneratedMethod : IGeneratedMethod
@@ -114,6 +119,31 @@ public class GeneratedMethod : IGeneratedMethod
 
         return true;
     }
+    
+    /// <summary>
+    ///     Add a single line comment as the header to this type
+    /// </summary>
+    /// <param name="text"></param>
+    public void Comment(string text)
+    {
+        Header = new OneLineComment(text);
+    }
+    
+    /// <summary>
+    ///     Add a multi line comment as the header to this type
+    /// </summary>
+    /// <param name="text"></param>
+    public void MultiLineComment(string text)
+    {
+        Header = new MultiLineComment(text);
+    }
+    
+    /// <summary>
+    ///     <summary>
+    ///         Optional code fragment to write at the beginning of this
+    ///         type in code
+    ///     </summary>
+    public ICodeFragment? Header { get; set; }
 
 
     public void WriteMethod(ISourceWriter writer)
@@ -123,6 +153,8 @@ public class GeneratedMethod : IGeneratedMethod
             throw new InvalidOperationException(
                 $"You must call {nameof(ArrangeFrames)}() before writing out the source code");
         }
+
+        Header?.Write(writer);
 
         var returnValue = determineReturnExpression();
 

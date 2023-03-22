@@ -95,7 +95,31 @@ public class ConstructorFrame : SyncFrame
         IsAsync = builtType.CanBeCastTo<IAsyncDisposable>();
     }
     
-    public string? CommentText { get; set; }
+    /// <summary>
+    ///     Add a single line comment as the header to this type
+    /// </summary>
+    /// <param name="text"></param>
+    public void Comment(string text)
+    {
+        Header = new OneLineComment(text);
+    }
+    
+    /// <summary>
+    ///     Add a multi line comment as the header to this type
+    /// </summary>
+    /// <param name="text"></param>
+    public void MultiLineComment(string text)
+    {
+        Header = new MultiLineComment(text);
+    }
+    
+    /// <summary>
+    ///     <summary>
+    ///         Optional code fragment to write at the beginning of this
+    ///         type in code
+    ///     </summary>
+    public ICodeFragment? Header { get; set; }
+
 
     public Type BuiltType { get; }
 
@@ -119,12 +143,12 @@ public class ConstructorFrame : SyncFrame
 
     public override void GenerateCode(GeneratedMethod method, ISourceWriter writer)
     {
-        if (CommentText.IsNotEmpty())
+        if (Header != null)
         {
             writer.WriteLine("");
-            writer.WriteComment(CommentText);
+            Header.Write(writer);
         }
-        
+
         switch (Mode)
         {
             case ConstructorCallMode.Variable:

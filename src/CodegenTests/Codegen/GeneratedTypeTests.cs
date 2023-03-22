@@ -29,7 +29,44 @@ public class GeneratedTypeTests
     }
 
     [Fact]
+    public void write_multi_line_comment_header()
+    {
+        var assembly = new GeneratedAssembly(new GenerationRules());
+        var type = assembly.AddType("SomeClass", typeof(ClassWithGenericParameter<SomeInnerClass>));
+        type.MultiLineCommentType(@"
+some comment text
+other comment text");
+
+        type.Header.ShouldBeOfType<MultiLineComment>();
+        
+        assembly.CompileAll();
+        
+        _output.WriteLine(type.SourceCode);
+
+        var lines = type.SourceCode!.ReadLines().ToArray();
+        lines
+            .ShouldContain("    * some comment text");
+        lines
+            .ShouldContain("    * other comment text");
+    }
+
+    [Fact]
     public void write_comment_text_into_source_code()
+    {
+        var assembly = new GeneratedAssembly(new GenerationRules());
+        var type = assembly.AddType("SomeClass", typeof(ClassWithGenericParameter<SomeInnerClass>));
+        type.CommentType("Hey, look at this!");
+
+        assembly.CompileAll();
+
+        type.SourceCode.ReadLines()
+            .ShouldContain("    // Hey, look at this!");
+        _output.WriteLine(type.SourceCode);
+    }
+    
+    
+    [Fact]
+    public void write_comment_text_into_source_code_2()
     {
         var assembly = new GeneratedAssembly(new GenerationRules());
         var type = assembly.AddType("SomeClass", typeof(ClassWithGenericParameter<SomeInnerClass>));

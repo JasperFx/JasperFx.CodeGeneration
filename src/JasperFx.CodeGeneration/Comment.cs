@@ -1,3 +1,6 @@
+using System.Linq;
+using JasperFx.Core;
+
 namespace JasperFx.CodeGeneration;
 
 public interface ICodeFragment
@@ -17,6 +20,28 @@ public class OneLineComment : ICodeFragment
     public void Write(ISourceWriter writer)
     {
         writer.WriteComment(Text);
+    }
+}
+
+public class MultiLineComment : ICodeFragment
+{
+    public MultiLineComment(string text)
+    {
+        Text = text.Trim();
+    }
+
+    public string Text { get; }
+
+    public void Write(ISourceWriter writer)
+    {
+        writer.Write("/*");
+        var lines = Text.ReadLines();
+        foreach (var line in lines)
+        {
+            writer.Write("* " + line);
+        }
+        
+        writer.Write("*/");
     }
 }
 
