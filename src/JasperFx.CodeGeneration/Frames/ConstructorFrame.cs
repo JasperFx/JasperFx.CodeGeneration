@@ -20,11 +20,10 @@ public enum ConstructorCallMode
 
 public class SetterArg
 {
-    //TODO NRT - does this ctor make sense?
     public SetterArg(string propertyName, Variable variable)
     {
-        PropertyName = propertyName;
-        Variable = variable;
+        PropertyName = propertyName ?? throw new ArgumentNullException(nameof(propertyName));
+        Variable = variable ?? throw new ArgumentNullException(nameof(variable));
     }
 
     public SetterArg(string propertyName, Type propertyType)
