@@ -303,6 +303,7 @@ public class MethodCall : Frame
     {
         if (CommentText.IsNotEmpty())
         {
+            writer.WriteLine("");
             writer.WriteComment(CommentText);
         }
 
