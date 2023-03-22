@@ -82,6 +82,12 @@ public class VariableTests
     }
 
     [Fact]
+    public void default_arg_name_of_string()
+    {
+        Variable.DefaultArgName(typeof(string)).ShouldBe("stringValue");
+    }
+
+    [Fact]
     public void default_arg_name_of_open_generic_type()
     {
         Variable.DefaultArgName(typeof(IOpenGeneric<>))

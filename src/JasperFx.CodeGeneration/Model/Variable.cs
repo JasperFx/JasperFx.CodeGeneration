@@ -98,6 +98,8 @@ public class Variable
             return argPrefix + suffix;
         }
 
+        if (argType == typeof(string)) return "stringValue";
+
         var parts = argType.Name.SplitPascalCase().Split(' ');
         if (argType.GetTypeInfo().IsInterface && parts.First() == "I")
         {
