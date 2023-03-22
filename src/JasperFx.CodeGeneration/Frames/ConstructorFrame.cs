@@ -95,6 +95,8 @@ public class ConstructorFrame : SyncFrame
 
         IsAsync = builtType.CanBeCastTo<IAsyncDisposable>();
     }
+    
+    public string? CommentText { get; set; }
 
     public Type BuiltType { get; }
 
@@ -118,6 +120,12 @@ public class ConstructorFrame : SyncFrame
 
     public override void GenerateCode(GeneratedMethod method, ISourceWriter writer)
     {
+        if (CommentText.IsNotEmpty())
+        {
+            writer.WriteLine("");
+            writer.WriteComment(CommentText);
+        }
+        
         switch (Mode)
         {
             case ConstructorCallMode.Variable:
