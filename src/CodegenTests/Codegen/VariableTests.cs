@@ -109,7 +109,10 @@ public class VariableTests
         Variable.DefaultArgName<HyperdriveMotivator.IInnerThing>()
             .ShouldBe("innerThing");
     }
+    
 }
+
+public class Result<T1, T2>{}
 
 public interface IWidget
 {
