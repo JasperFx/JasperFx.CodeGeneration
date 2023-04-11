@@ -17,6 +17,13 @@ public class VariableTests
     }
 
     [Fact]
+    public void quietly_correct_event()
+    {
+        var variable = new Variable(typeof(string), "event");
+        variable.Usage.ShouldBe("@event");
+    }
+
+    [Fact]
     public void default_arg_name_of_normal_class()
     {
         Variable.DefaultArgName<HyperdriveMotivator>()

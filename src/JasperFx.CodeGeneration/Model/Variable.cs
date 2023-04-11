@@ -21,8 +21,10 @@ public class Variable
 
     public Variable(Type variableType, string usage)
     {
-        VariableType = variableType;
-        Usage = usage;
+        VariableType = variableType ?? throw new ArgumentNullException(nameof(variableType));
+        Usage = usage ?? throw new ArgumentNullException(nameof(usage));
+
+        if (usage == "event") Usage = "@event";
     }
 
     public Variable(Type variableType, string usage, Frame? creator) : this(variableType, usage)
