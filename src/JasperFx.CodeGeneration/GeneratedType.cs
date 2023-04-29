@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using JasperFx.CodeGeneration.Model;
 using JasperFx.Core;
+using JasperFx.Core.Reflection;
 
 namespace JasperFx.CodeGeneration;
 

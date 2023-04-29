@@ -1,5 +1,6 @@
 using System;
 using JasperFx.Core;
+using JasperFx.Core.Reflection;
 
 namespace JasperFx.CodeGeneration;
 

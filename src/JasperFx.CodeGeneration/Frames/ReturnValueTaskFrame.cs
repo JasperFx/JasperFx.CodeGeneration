@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using JasperFx.CodeGeneration.Model;
+using JasperFx.Core.Reflection;
 
 namespace JasperFx.CodeGeneration.Frames;
 

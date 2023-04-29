@@ -1,4 +1,5 @@
 ﻿using System;
+using JasperFx.Core.Reflection;
 
 namespace JasperFx.CodeGeneration.Model;
 

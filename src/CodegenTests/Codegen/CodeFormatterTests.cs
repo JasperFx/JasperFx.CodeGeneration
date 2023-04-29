@@ -1,5 +1,6 @@
 using JasperFx.CodeGeneration;
 using JasperFx.CodeGeneration.Model;
+using JasperFx.Core.Reflection;
 using Shouldly;
 using Xunit;
 
