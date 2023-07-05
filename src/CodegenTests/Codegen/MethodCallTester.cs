@@ -266,7 +266,7 @@ public class MethodCallTester
         call.GenerateCode(new GeneratedMethod("Go", typeof(void)), writer);
 
         writer.Code().Trim()
-            .ShouldBe("var result_of_ReturnAndOuts = ReturnAndOuts(input, out var stringValue, out var int32);");
+            .ShouldBe("var result_of_ReturnAndOuts = ReturnAndOuts(input, out var stringValue, out var intValue);");
     }
 
     [Fact]
