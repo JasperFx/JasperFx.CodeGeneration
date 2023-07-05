@@ -101,6 +101,10 @@ public class Variable
         }
 
         if (argType == typeof(string)) return "stringValue";
+        if (argType == typeof(decimal)) return "decimalValue";
+        if (argType == typeof(bool)) return "boolValue";
+        if (argType == typeof(int)) return "intValue";
+        if (argType == typeof(long)) return "longValue";
 
         var parts = argType.Name.SplitPascalCase().Split(' ');
         if (argType.GetTypeInfo().IsInterface && parts.First() == "I")

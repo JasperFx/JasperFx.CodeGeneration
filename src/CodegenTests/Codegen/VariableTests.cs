@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using JasperFx.CodeGeneration.Model;
 using Shouldly;
 using Xunit;
@@ -87,11 +88,16 @@ public class VariableTests
         Variable.DefaultArgName<IFooHandler<HyperdriveMotivator>>()
             .ShouldBe("fooHandler");
     }
-
-    [Fact]
-    public void default_arg_name_of_string()
+    
+    [Theory]
+    [InlineData(typeof(string), "stringValue")]
+    [InlineData(typeof(decimal), "decimalValue")]
+    [InlineData(typeof(bool), "boolValue")]
+    [InlineData(typeof(long), "longValue")]
+    [InlineData(typeof(int), "intValue")]
+    public void default_name_of_system_types(Type type, string expected)
     {
-        Variable.DefaultArgName(typeof(string)).ShouldBe("stringValue");
+        Variable.DefaultArgName(type).ShouldBe(expected);
     }
 
     [Fact]
