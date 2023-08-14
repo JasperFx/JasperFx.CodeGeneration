@@ -84,6 +84,10 @@ public class Variable
         return new Variable(typeof(T), variableName ?? DefaultArgName(typeof(T)));
     }
 
+    public static string SanitizeVariableName(string variableName)
+    {
+        return variableName.Replace('<', '_').Replace('>', '_');
+    }
 
     public static string DefaultArgName(Type argType)
     {
@@ -97,7 +101,7 @@ public class Variable
             var argPrefix = DefaultArgName(argType.DetermineElementType()!);
             var suffix = argType.GetGenericTypeDefinition().Name.Split('`').First();
 
-            return argPrefix + suffix;
+            return SanitizeVariableName(argPrefix + suffix);
         }
 
         if (argType == typeof(string)) return "stringValue";
@@ -113,7 +117,7 @@ public class Variable
         }
 
         var raw = (parts.First().ToLower() + parts.Skip(1).Join("")).Split('`').First();
-        return raw;
+        return SanitizeVariableName(raw);
     }
 
     public static string DefaultArgName<T>()
