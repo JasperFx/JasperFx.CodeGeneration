@@ -1,5 +1,7 @@
 using System;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using JasperFx.CodeGeneration.Model;
 using JasperFx.CodeGeneration.Util;
 using JasperFx.Core;
@@ -8,6 +10,20 @@ namespace JasperFx.CodeGeneration;
 
 public static class CodeGenerationExtensions
 {
+    /// <summary>
+    /// Try to locate a pre-generated type by namespace and type name in the
+    /// supplied assembly
+    /// </summary>
+    /// <param name="assembly"></param>
+    /// <param name="namespace"></param>
+    /// <param name="typeName"></param>
+    /// <returns></returns>
+    public static Type FindPreGeneratedType(this Assembly assembly, string @namespace, string typeName)
+    {
+        var fullName = $"{@namespace}.{typeName}";
+        return assembly.ExportedTypes.FirstOrDefault(x => x.FullName == fullName);
+    }
+    
     public static GeneratedAssembly StartAssembly(this ICodeFileCollection generator, GenerationRules rules)
     {
         if (generator.ChildNamespace.IsEmpty())

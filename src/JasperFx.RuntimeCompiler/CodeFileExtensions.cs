@@ -3,11 +3,9 @@ using System.IO;
 using System.Threading.Tasks;
 using JasperFx.CodeGeneration;
 using JasperFx.CodeGeneration.Model;
-using JasperFx.CodeGeneration.Util;
 using JasperFx.Core;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
-
 
 namespace JasperFx.RuntimeCompiler
 {
@@ -65,7 +63,6 @@ namespace JasperFx.RuntimeCompiler
                 Console.WriteLine($"Generated and compiled code in memory for {parent.ChildNamespace}.{file.FileName}");
             }
             
-
         }
         
         /// <summary>
@@ -112,13 +109,12 @@ namespace JasperFx.RuntimeCompiler
                 if (rules.TypeLoadMode == TypeLoadMode.Static)
                 {
                     throw new ExpectedTypeMissingException(
-                        $"Could not load expected pre-built types for code file {file.FileName} ({file})");
+                        $"Could not load expected pre-built types for code file {file.FileName} ({file}) from assembly {rules.ApplicationAssembly.FullName}. You may want to verify that this is the correct assembly for pre-generated types.");
                 }
                 
                 var generatedAssembly = parent.StartAssembly(rules);
                 file.AssembleTypes(generatedAssembly);
                 var serviceVariables = services?.GetService(typeof(IServiceVariableSource)) as IServiceVariableSource;
-                
                 
                 var compiler = new AssemblyGenerator();
                 compiler.Compile(generatedAssembly, serviceVariables);
@@ -133,11 +129,9 @@ namespace JasperFx.RuntimeCompiler
                 
                 if (logger.IsEnabled(LogLevel.Debug))
                 {
-                    logger.LogDebug("Generated and compiled code in memory for {Namespace}.{FileName}", parent.ChildNamespace, file.FileName);
+                    logger.LogDebug("Generated and compiled code in memory for {Namespace}.{FileName} ({File})", parent.ChildNamespace, file.FileName, file);
                 }
             }
-            
-
         }
 
         public static void WriteCodeFile(this ICodeFile file, ICodeFileCollection parent, GenerationRules rules, string code)
