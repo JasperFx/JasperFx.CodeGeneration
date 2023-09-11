@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -7,6 +8,13 @@ using JasperFx.CodeGeneration.Util;
 using JasperFx.Core;
 
 namespace JasperFx.CodeGeneration;
+
+public class MissingTypeException : Exception
+{
+    public MissingTypeException(string? message) : base(message)
+    {
+    }
+}
 
 public static class CodeGenerationExtensions
 {
@@ -94,5 +102,33 @@ public static class CodeGenerationExtensions
     {
         var setter = frames.ParentMethod.ParentType.AddStringConstant(constantName, value);
         frames.Return(setter);
+    }
+
+    /// <summary>
+    /// Assert that all the expected pre-generated types exist in the configured assembly
+    /// </summary>
+    /// <param name="collection"></param>
+    /// <param name="services"></param>
+    /// <exception cref="MissingTypeException"></exception>
+    public static void AssertPreBuildTypesExist(this ICodeFileCollection collection, IServiceProvider services)
+    {
+        var missing = new List<ICodeFile>();
+        
+        foreach (var file in collection.BuildFiles())
+        {
+            var @namespace = $"{collection.Rules.GeneratedNamespace}.{collection.ChildNamespace}";
+            if (!file.AttachTypesSynchronously(collection.Rules, collection.Rules.ApplicationAssembly, services,
+                    @namespace))
+            {
+                missing.Add(file);
+            }
+        }
+
+        if (missing.Any())
+        {
+            throw new MissingTypeException(
+                $"Missing expected pre-generated type(s) from assembly {collection.Rules.ApplicationAssembly.FullName}:\n" +
+                missing.Select(x => x.ToString()).Join("\n"));
+        }
     }
 }

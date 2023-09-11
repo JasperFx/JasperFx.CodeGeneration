@@ -51,7 +51,6 @@ namespace JasperFx.CodeGeneration.Commands
                     
                 case CodeAction.delete:
                     builder.DeleteAllGeneratedCode();
-                    
                     break;
                     
                 case CodeAction.write:

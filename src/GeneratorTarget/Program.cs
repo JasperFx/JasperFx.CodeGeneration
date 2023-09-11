@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using JasperFx.CodeGeneration;
+using JasperFx.CodeGeneration.Commands;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Oakton;
@@ -17,6 +18,8 @@ namespace GeneratorTarget
                 {
                     services.AddSingleton<ICodeFileCollection>(new GreeterGenerator());
                     services.AddSingleton<ICodeFileCollection>(new GreeterGenerator2());
+                    
+                    services.AssertAllExpectedPreBuiltTypesExistOnStartUp();
                 })
                 .RunOaktonCommands(args);
 

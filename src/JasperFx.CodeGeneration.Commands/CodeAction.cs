@@ -5,6 +5,6 @@ namespace JasperFx.CodeGeneration.Commands
         preview,
         write,
         test,
-        delete
+        delete,
     }
 }
