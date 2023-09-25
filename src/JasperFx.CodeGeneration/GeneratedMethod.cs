@@ -206,6 +206,8 @@ public class GeneratedMethod : IGeneratedMethod
 
         services?.StartNewMethod();
 
+        var startingAsyncMode = _asyncMode;
+
         var compiler = new MethodFrameArranger(this, type, services);
         try
         {
@@ -215,6 +217,12 @@ public class GeneratedMethod : IGeneratedMethod
         {
             e.Type = type;
             throw;
+        }
+
+        // Correct the async mode even someone tried to override this
+        if (startingAsyncMode == AsyncMode.AsyncTask)
+        {
+            _asyncMode = startingAsyncMode;
         }
     }
 
