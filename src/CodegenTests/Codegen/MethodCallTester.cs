@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using JasperFx.CodeGeneration;
 using JasperFx.CodeGeneration.Frames;
 using JasperFx.CodeGeneration.Model;
+using Microsoft.CodeAnalysis.FlowAnalysis;
 using NSubstitute;
 using Shouldly;
 using Xunit;
@@ -311,6 +312,42 @@ public class MethodCallTester
         MethodCall.For<MethodCallTarget>(x => x.ValueTaskString())
             .ReturnType.ShouldBe(typeof(string));
     }
+
+    [Fact]
+    public void try_to_assign_variable_to_void_method()
+    {
+        // Nothing happens, nothing blows up
+        var methodCall = MethodCall.For<MethodCallTarget>(x => x.Throw(null));
+        methodCall
+            .TryReplaceVariableCreationWithAssignment(new Variable(typeof(Ball)));
+        
+        methodCall.ReturnVariable.ShouldBeNull();
+    }
+
+    [Fact]
+    public void try_to_assign_variable_to_exact_match()
+    {
+        var methodCall = MethodCall.For<MethodCallTarget>(x => x.Basketball());
+
+        var ball = new Variable(typeof(Basketball));
+        methodCall.TryReplaceVariableCreationWithAssignment(ball);
+        
+        methodCall.ReturnVariable.ShouldBe(ball);
+        methodCall.ReturnAction.ShouldBe(ReturnAction.Assign);
+    }
+
+    [Fact]
+    public void try_to_assign_variable_within_tuple()
+    {
+        var methodCall = MethodCall.For<MethodCallTarget>(x => x.Sports());
+
+        var ball = new Variable(typeof(Basketball), "spalding");
+        methodCall.TryReplaceVariableCreationWithAssignment(ball);
+
+        var tuple = methodCall.ReturnVariable.ShouldBeOfType<ValueTypeReturnVariable>();
+        tuple.Inners[1].Inner.ShouldBeSameAs(ball);
+        tuple.Inners[1].Action.ShouldBe(ReturnAction.Assign);
+    }
 }
 
 public class Ball
@@ -325,6 +362,21 @@ public class MethodCallTarget
 {
     public void Throw(Ball ball)
     {
+    }
+
+    public Basketball Basketball()
+    {
+        return new Basketball();
+    }
+
+    public Ball CreateBall()
+    {
+        return new Ball();
+    }
+
+    public (Ball, Basketball) Sports()
+    {
+        return (new Ball(), new Basketball());
     }
 
     public void WithOuts(string in1, out string out1, out int out2)

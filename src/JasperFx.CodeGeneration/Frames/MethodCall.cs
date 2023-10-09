@@ -425,4 +425,44 @@ public class MethodCall : Frame
     {
         return $"{nameof(HandlerType)}: {HandlerType}, {nameof(Method)}: {Method}";
     }
+
+    /// <summary>
+    /// Assign the result of the supplied index within a value tuple return variable
+    /// </summary>
+    /// <param name="index"></param>
+    /// <param name="variable"></param>
+    public void AssignResultTo(int index, Variable variable)
+    {
+        if (ReturnVariable is ValueTypeReturnVariable tuple)
+        {
+            var inner = tuple.Inners[index].Inner;
+            creates.Remove(inner);
+            
+            tuple.AssignResultTo(index, variable);
+        }
+        else
+        {
+            throw new InvalidOperationException("Return variable is not a tuple");
+        }
+        
+        
+    }
+
+    public void TryReplaceVariableCreationWithAssignment(Variable variable)
+    {
+        if (ReturnVariable == null) return;
+
+        if (ReturnVariable.VariableType == variable.VariableType)
+        {
+            AssignResultTo(variable);
+        }
+        else if (ReturnVariable is ValueTypeReturnVariable tuple)
+        {
+            var index = ArrayTools.IndexOf(tuple.Inners, v => v.Inner.VariableType == variable.VariableType);
+            if (index > -1)
+            {
+                AssignResultTo(index, variable);
+            }
+        }
+    }
 }

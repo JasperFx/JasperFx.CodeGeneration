@@ -19,6 +19,15 @@ public class when_building_a_method_call_for_a_tuple
     }
 
     [Fact]
+    public void assign_variable_instead()
+    {
+        var color = new Variable(typeof(string), "color");
+        theCall.AssignResultTo(0, color);
+        
+        theCall.ReturnVariable.Usage.ShouldBe("(color, var blue, var green)");
+    }
+
+    [Fact]
     public void the_creates_new_of_applies_to_tuple_values()
     {
         theCall.CreatesNewOf<Blue>().ShouldBeTrue();
