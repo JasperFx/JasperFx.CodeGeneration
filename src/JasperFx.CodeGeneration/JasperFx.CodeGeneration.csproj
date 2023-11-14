@@ -6,7 +6,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="FastExpressionCompiler" Version="3.3.4" />
-        <PackageReference Include="JasperFx.Core" Version="1.3.0" />
+        <PackageReference Include="FastExpressionCompiler" Version="4.0.0" />
+        <PackageReference Include="JasperFx.Core" Version="1.5.0" />
     </ItemGroup>
 </Project>
+

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
   <PropertyGroup>
-    <VersionPrefix>3.2.0</VersionPrefix>
+    <VersionPrefix>3.4.0</VersionPrefix>
     <LangVersion>10.0</LangVersion>
     <Authors>Jeremy D. Miller;Babu Annamalai;Oskar Dudycz;Joona-Pekka Kokko</Authors>
-    <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
+    <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
     <DebugType>portable</DebugType>
 
-    <PackageIconUrl>https://github.com/JasperFx/JasperFx.CodeGeneration/blob/main/jasper-icon.png?raw=true</PackageIconUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/JasperFx/JasperFx.Core/main/jasperfx-logo.jpg?raw=true</PackageIconUrl>
     <PackageProjectUrl>https:/github.com/jasperfx/JasperFx.CodeGeneration</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <NoWarn>1570;1571;1572;1573;1574;1587;1591;1701;1702;1711;1735;0618</NoWarn>
