@@ -48,6 +48,7 @@ namespace Generated
 {
     public class AddOperator : IOperation
     {
+        // Some comment
         public int Calculate(int one, int two)
         {
             return one + two;
