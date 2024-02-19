@@ -70,6 +70,8 @@ namespace GeneratorTarget
             };
         }
 
+        public bool ShouldUseContainerServices { get; } = false;
+
         public string ChildNamespace { get; } = "Helpers.Greeters";
         
         public GenerationRules Rules { get; } = new GenerationRules
@@ -90,6 +92,8 @@ namespace GeneratorTarget
                 new GreeterFile("Laters"),
             };
         }
+
+        public bool ShouldUseContainerServices { get; } = false;
 
         public string ChildNamespace { get; } = "Helpers.Greeters2";
 

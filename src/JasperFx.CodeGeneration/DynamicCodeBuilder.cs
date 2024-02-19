@@ -66,7 +66,6 @@ public class DynamicCodeBuilder
 
     public void WriteGeneratedCode(Action<string> onFileWritten)
     {
-
         foreach (var collection in Collections)
         {
             var directory = collection.Rules.GeneratedCodeOutputPath.ToFullPath();
@@ -102,7 +101,10 @@ public class DynamicCodeBuilder
         var files = collection.BuildFiles();
         foreach (var file in files) file.AssembleTypes(generatedAssembly);
 
-        return generatedAssembly.GenerateCode(ServiceVariableSource);
+        // This was important. Each source code collection should explicitly opt into using IoC services rather
+        // than making that automatic
+        var services = collection is ICodeFileCollectionWithServices ? ServiceVariableSource : null;
+        return generatedAssembly.GenerateCode(services);
     }
 
     /// <summary>
