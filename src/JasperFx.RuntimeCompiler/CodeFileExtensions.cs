@@ -145,7 +145,7 @@ namespace JasperFx.RuntimeCompiler
             }
             catch (Exception e)
             {
-                Console.WriteLine("Unable to write code file");
+                Console.WriteLine("Unable to write code file for " + file.FileName);
                 Console.WriteLine(e.ToString());
             }  
         }
