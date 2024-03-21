@@ -54,7 +54,7 @@ public class MethodCall : Frame
 
             if (ReturnType.IsValueTuple())
             {
-                var values = ReturnType.GetGenericArguments().Select(x => new Variable(x, this)).ToArray();
+                var values = buildTupleCreateVariables().ToArray();
 
                 ReturnVariable = new ValueTypeReturnVariable(ReturnType, values);
             }
@@ -87,7 +87,19 @@ public class MethodCall : Frame
             }
         }
     }
-    
+
+    private IEnumerable<Variable> buildTupleCreateVariables()
+    {
+        foreach (var type in ReturnType.GetGenericArguments())
+        {
+            var count = Creates.Count(x => x.VariableType == type);
+            var suffix = count > 0 ? (count + 1).ToString() : string.Empty;
+            var created = new Variable(type, Variable.DefaultArgName(type) + suffix, this);
+            
+            yield return created;
+        }
+    }
+
     /// <summary>
     /// Does this MethodCall create a new variable of the object type? This includes the return variable, destructuring
     /// tuples, or out parameters

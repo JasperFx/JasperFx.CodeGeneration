@@ -348,6 +348,15 @@ public class MethodCallTester
         tuple.Inners[1].Inner.ShouldBeSameAs(ball);
         tuple.Inners[1].Action.ShouldBe(ReturnAction.Assign);
     }
+
+    [Fact]
+    public void tuple_of_same_type()
+    {
+        var methodCall = MethodCall.For<MethodCallTarget>(x => x.TupleOfSame());
+        methodCall.Creates.Count().ShouldBe(2);
+        methodCall.Creates.ElementAt(0).Usage.ShouldBe("martenOp");
+        methodCall.Creates.ElementAt(1).Usage.ShouldBe("martenOp2");
+    }
 }
 
 public class Ball
@@ -434,4 +443,14 @@ public class MethodCallTarget
     {
         return Task.FromResult("foo");
     }
+
+    public (IMartenOp, IMartenOp) TupleOfSame()
+    {
+        return (default, default);
+    }
+}
+
+public interface IMartenOp
+{
+    
 }
