@@ -21,7 +21,7 @@ namespace JasperFx.RuntimeCompiler
                 
                 var generatedAssembly = parent.StartAssembly(rules);
                 file.AssembleTypes(generatedAssembly);
-                var serviceVariables = services?.GetService(typeof(IServiceVariableSource)) as IServiceVariableSource;
+                var serviceVariables = parent is ICodeFileCollectionWithServices ? services?.GetService(typeof(IServiceVariableSource)) as IServiceVariableSource : null;
                         
                 var compiler = new AssemblyGenerator();
                 compiler.Compile(generatedAssembly, serviceVariables);
@@ -89,7 +89,7 @@ namespace JasperFx.RuntimeCompiler
                 
                 var generatedAssembly = parent.StartAssembly(rules);
                 file.AssembleTypes(generatedAssembly);
-                var serviceVariables = services?.GetService(typeof(IServiceVariableSource)) as IServiceVariableSource;
+                var serviceVariables = parent is ICodeFileCollectionWithServices ? services?.GetService(typeof(IServiceVariableSource)) as IServiceVariableSource : null;
                         
                 var compiler = new AssemblyGenerator();
                 compiler.Compile(generatedAssembly, serviceVariables);

@@ -79,7 +79,7 @@ public class DynamicCodeBuilder
                 var generatedAssembly = collection.StartAssembly(collection.Rules);
                 file.AssembleTypes(generatedAssembly);
 
-                var code = generatedAssembly.GenerateCode(ServiceVariableSource);
+                var code = collection is ICodeFileCollectionWithServices ? generatedAssembly.GenerateCode(ServiceVariableSource) : generatedAssembly.GenerateCode(null);
                 var fileName = Path.Combine(exportDirectory, file.FileName.Replace(" ", "_") + ".cs");
                 File.WriteAllText(fileName, code);
                 onFileWritten(fileName);
