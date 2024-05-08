@@ -1,4 +1,5 @@
 ﻿using System;
+using JasperFx.CodeGeneration.Frames;
 using JasperFx.Core.Reflection;
 
 namespace JasperFx.CodeGeneration.Model;
@@ -39,6 +40,25 @@ public class InjectedField : Variable
 
     public Variable ToBaseCtorVariable()
     {
-        return new Variable(ArgType, CtorArg);
+        return new BaseConstructorArgument(this);
+    }
+}
+
+public class BaseConstructorArgument : Variable
+{
+    private readonly InjectedField _field;
+
+    public BaseConstructorArgument(InjectedField field) : base(field.ArgType, field.Usage)
+    {
+        _field = field;
+    }
+
+    public override string Usage
+    {
+        get => _field.CtorArg;
+        protected set
+        {
+            // nothing
+        }
     }
 }
