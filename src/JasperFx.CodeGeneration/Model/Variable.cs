@@ -12,6 +12,9 @@ namespace JasperFx.CodeGeneration.Model;
 
 public class Variable
 {
+    private static readonly string[] _reservedNames = new string[]
+        { "lock", "switch", "case", "if", "base", "catch", "class", "continue", "default" };
+    
     private Frame? _frame;
 
     public Variable(Type variableType) : this(variableType, DefaultArgName(variableType))
@@ -85,6 +88,11 @@ public class Variable
 
     public static string SanitizeVariableName(string variableName)
     {
+        if (_reservedNames.Contains(variableName))
+        {
+            return "@" + variableName;
+        }
+        
         return variableName.Replace('<', '_').Replace('>', '_');
     }
 

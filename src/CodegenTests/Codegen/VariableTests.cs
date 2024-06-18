@@ -122,6 +122,12 @@ public class VariableTests
         Variable.DefaultArgName<HyperdriveMotivator.IInnerThing>()
             .ShouldBe("innerThing");
     }
+
+    [Fact]
+    public void custom_lock_classes()
+    {
+        Variable.DefaultArgName<Lock>().ShouldBe("@lock");
+    }
     
 }
 
@@ -157,3 +163,6 @@ public class HyperdriveMotivator
     {
     }
 }
+
+// Because of course, someone did this
+public class Lock{}
