@@ -99,7 +99,17 @@ public class DynamicCodeBuilder
 
         var generatedAssembly = new GeneratedAssembly(collection.Rules, @namespace);
         var files = collection.BuildFiles();
-        foreach (var file in files) file.AssembleTypes(generatedAssembly);
+        foreach (var file in files)
+        {
+            try
+            {
+                file.AssembleTypes(generatedAssembly);
+            }
+            catch (Exception e)
+            {
+                throw new CodeGenerationException(file, e);
+            }
+        }
 
         // This was important. Each source code collection should explicitly opt into using IoC services rather
         // than making that automatic
