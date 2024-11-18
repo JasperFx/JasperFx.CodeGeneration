@@ -42,4 +42,4 @@ jobs:
         dotnet-version: 6.0.x
 
     - name: Test
-      run: dotnet run -p build/build.csproj -- ci
+      run: dotnet run --project build/build.csproj -- ci
