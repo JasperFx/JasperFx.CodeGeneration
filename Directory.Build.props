@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
   <PropertyGroup>
-    <VersionPrefix>3.6.0</VersionPrefix>
+    <VersionPrefix>3.7.0</VersionPrefix>
     <LangVersion>10.0</LangVersion>
     <Authors>Jeremy D. Miller;Babu Annamalai;Oskar Dudycz;Joona-Pekka Kokko</Authors>
-    <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
+    <TargetFrameworks>net6.0;net7.0;net8.0;net9.0</TargetFrameworks>
     <DebugType>portable</DebugType>
 
     <PackageIconUrl>https://raw.githubusercontent.com/JasperFx/JasperFx.Core/main/jasperfx-logo.jpg?raw=true</PackageIconUrl>
