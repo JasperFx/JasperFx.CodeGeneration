@@ -30,7 +30,7 @@ jobs:
         dotnet-version: 6.0.x
 
     - name: Run Pack
-      run: dotnet run -p build/build.csproj -- pack
+      run: dotnet run --project build/build.csproj -- pack
       shell: bash
 
     - name: Publish to NuGet
